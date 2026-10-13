@@ -1,0 +1,123 @@
+---
+import Base from '../layouts/Base.astro';
+import { WHATSAPP, linkWhatsApp } from '../config';
+
+const atualizado = '13 de outubro de 2026';
+const contato = linkWhatsApp('Olá! Tenho uma dúvida sobre privacidade e meus dados na Prestio.');
+---
+
+<Base
+  title="Política de Privacidade · Prestio"
+  description="Como a Prestio trata os dados das lojas e dos clientes que fazem pedidos pelo cardápio digital, de acordo com a LGPD."
+>
+  <article class="documento">
+    <h1>Política de Privacidade</h1>
+    <p class="atualizado">Última atualização: {atualizado}</p>
+
+    <p>
+      A Prestio é um sistema de pedidos formado por um cardápio digital, usado pelos clientes das lojas, e por um painel,
+      usado pelas lojas. Esta política explica quais dados tratamos, para quê e quais são os seus direitos, conforme a Lei
+      Geral de Proteção de Dados (Lei nº 13.709/2018, a LGPD).
+    </p>
+
+    <h2>1. Quem é responsável pelos dados</h2>
+    <p>
+      <b>Dados dos clientes que fazem pedidos:</b> a loja onde o pedido é feito é a controladora desses dados. É ela quem
+      decide como usá-los para atender o pedido. A Prestio atua como operadora: guarda e processa os dados em nome da
+      loja, só para fazer o sistema funcionar.
+    </p>
+    <p>
+      <b>Dados das lojas e dos usuários do painel:</b> a Prestio é a controladora dos dados de cadastro das lojas
+      contratantes e dos usuários do painel.
+    </p>
+
+    <h2>2. Quais dados tratamos</h2>
+    <p><b>De quem faz pedidos pelo cardápio:</b></p>
+    <ul>
+      <li>nome e telefone;</li>
+      <li>CPF, usado para identificar o cliente e permitir a consulta de “Meus pedidos”;</li>
+      <li>endereço de entrega, quando o pedido é de delivery;</li>
+      <li>número da mesa, quando o pedido é feito pelo QR Code;</li>
+      <li>itens, escolhas, observações, valores e horários de cada pedido.</li>
+    </ul>
+    <p><b>Das lojas e dos usuários do painel:</b></p>
+    <ul>
+      <li>nome, e-mail e senha de acesso (a senha é guardada de forma criptografada);</li>
+      <li>dados da loja, como nome, endereço, telefone e cardápio;</li>
+      <li>registros de uso do painel, como quem aceitou ou cancelou um pedido.</li>
+    </ul>
+    <p><b>De quem visita este site:</b></p>
+    <ul>
+      <li>
+        não usamos cookies de medição nem de publicidade. O formulário de contato não guarda dados: ele só monta uma
+        mensagem e abre o WhatsApp no seu aparelho. O que você enviar por lá segue também a política do WhatsApp.
+      </li>
+    </ul>
+
+    <h2>3. Para que usamos os dados</h2>
+    <ul>
+      <li>receber, preparar, entregar e registrar os pedidos;</li>
+      <li>mostrar ao cliente o andamento do pedido e o histórico de pedidos;</li>
+      <li>gerar a mensagem de entrega no WhatsApp da loja;</li>
+      <li>gerar os relatórios da loja, como vendas, horários e clientes novos e recorrentes;</li>
+      <li>dar acesso ao painel, prestar suporte e cobrar a mensalidade da loja;</li>
+      <li>manter a segurança do sistema e cumprir obrigações legais.</li>
+    </ul>
+    <p>
+      As bases legais são a execução do contrato e dos procedimentos ligados ao pedido, o cumprimento de obrigação legal
+      e o legítimo interesse, sempre dentro do que é necessário para o pedido e para o funcionamento do sistema.
+    </p>
+
+    <h2>4. Com quem compartilhamos</h2>
+    <ul>
+      <li>com a loja onde o pedido foi feito, que vê os dados necessários para atender;</li>
+      <li>
+        com fornecedores de infraestrutura que hospedam o sistema e o banco de dados (como Vercel e Supabase), que podem
+        armazenar dados fora do Brasil, com garantias adequadas de proteção;
+      </li>
+      <li>com autoridades públicas, quando a lei exigir.</li>
+    </ul>
+    <p>Não vendemos dados pessoais e não usamos os dados dos clientes das lojas para publicidade.</p>
+
+    <h2>5. Segurança</h2>
+    <p>
+      Cada loja só acessa os próprios dados. A comunicação é criptografada (HTTPS), o acesso ao painel exige login e os
+      preços são sempre calculados no servidor. Nenhum sistema é 100% imune a falhas. Se acontecer um incidente que traga
+      risco a você, avisaremos a loja, você e a Autoridade Nacional de Proteção de Dados (ANPD), como manda a lei.
+    </p>
+
+    <h2>6. Por quanto tempo guardamos</h2>
+    <p>
+      Os dados de pedidos ficam guardados enquanto a loja usar a Prestio, para os relatórios e o histórico, e pelo prazo
+      exigido por lei. Quando a loja encerra o contrato, os dados podem ser exportados por ela e depois são apagados ou
+      anonimizados, salvo o que a lei obrigar a manter.
+    </p>
+
+    <h2>7. Seus direitos</h2>
+    <p>Pela LGPD, você pode pedir:</p>
+    <ul>
+      <li>a confirmação de que tratamos os seus dados e o acesso a eles;</li>
+      <li>a correção de dados incompletos ou errados;</li>
+      <li>a anonimização, o bloqueio ou a eliminação de dados desnecessários;</li>
+      <li>a portabilidade e informações sobre com quem compartilhamos;</li>
+      <li>a revisão do consentimento, quando ele for a base do tratamento.</li>
+    </ul>
+    <p>
+      Se você fez um pedido numa loja, o caminho mais rápido é falar com a própria loja, que é a responsável pelos seus
+      dados. Você também pode falar com a gente, e nós encaminharemos o pedido à loja.
+    </p>
+
+    <h2>8. Contato</h2>
+    <p>
+      Dúvidas sobre esta política ou sobre os seus dados: <a href={contato} target="_blank" rel="noopener"
+        >WhatsApp {WHATSAPP.exibicao}</a
+      >.
+    </p>
+
+    <h2>9. Mudanças nesta política</h2>
+    <p>
+      Podemos atualizar esta política. A data no topo mostra a versão em vigor. Mudanças importantes serão avisadas às
+      lojas pelo painel.
+    </p>
+  </article>
+</Base>

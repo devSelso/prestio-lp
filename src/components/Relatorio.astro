@@ -1,0 +1,186 @@
+---
+// Tela de relatórios desenhada em HTML (dados de exemplo).
+const horas = [
+  { h: '11h', v: 18 },
+  { h: '12h', v: 46 },
+  { h: '13h', v: 38 },
+  { h: '14h', v: 12 },
+  { h: '17h', v: 15 },
+  { h: '18h', v: 41 },
+  { h: '19h', v: 72 },
+  { h: '20h', v: 88 },
+  { h: '21h', v: 60 },
+  { h: '22h', v: 24 },
+];
+const max = Math.max(...horas.map((x) => x.v));
+const top = [
+  { nome: 'Pizza calabresa', qtd: 214 },
+  { nome: 'Bacon duplo', qtd: 168 },
+  { nome: 'Açaí 500 ml', qtd: 131 },
+];
+---
+
+<div class="rel" role="img" aria-label="Relatório com faturamento, ticket médio, pedidos por horário e produtos mais vendidos">
+  <div class="rel__topo">
+    <span class="rel__titulo">Relatórios · últimos 30 dias</span>
+    <span class="rel__export">Exportar Excel</span>
+  </div>
+  <div class="kpis">
+    <div><p class="k">Faturamento</p><p class="v">R$ 48.320</p><p class="d">+12% vs. mês anterior</p></div>
+    <div><p class="k">Pedidos</p><p class="v">1.284</p><p class="d">43 por dia</p></div>
+    <div><p class="k">Ticket médio</p><p class="v">R$ 37,63</p><p class="d">+R$ 2,10</p></div>
+    <div><p class="k">Tempo de preparo</p><p class="v">14 min</p><p class="d">média</p></div>
+  </div>
+  <div class="rel__baixo">
+    <div class="grafico">
+      <p class="k">Pedidos por horário</p>
+      <div class="barras">
+        {horas.map((x) => (
+          <div class="barra">
+            <span class={x.v === max ? 'pico' : ''} style={`height:${(x.v / max) * 100}%`}></span>
+            <small>{x.h}</small>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="top">
+      <p class="k">Mais vendidos</p>
+      {top.map((t, i) => (
+        <div class="top__linha">
+          <span class="pos">{i + 1}</span>
+          <span class="nome">{t.nome}</span>
+          <span class="qtd">{t.qtd}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .rel {
+    background: var(--painel);
+    color: var(--painel-texto);
+    border: 1px solid #e4d8cd;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 30px 70px -30px rgba(34, 21, 15, 0.35);
+    font-size: 12px;
+    line-height: 1.35;
+  }
+  p {
+    margin: 0;
+  }
+  .rel__topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .rel__titulo {
+    font: 700 14px var(--titulo);
+  }
+  .rel__export {
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid #d8c9bb;
+    border-radius: 999px;
+    padding: 4px 10px;
+    background: #fff;
+  }
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .kpis > div,
+  .grafico,
+  .top {
+    background: #fff;
+    border: 1px solid #ece2d8;
+    border-radius: 12px;
+    padding: 10px;
+  }
+  .k {
+    color: #8b7366;
+    font-size: 11px;
+  }
+  .v {
+    font: 700 18px var(--titulo);
+    margin-top: 2px;
+    letter-spacing: -0.02em;
+  }
+  .d {
+    color: #3f7d4a;
+    font-size: 11px;
+  }
+  .rel__baixo {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .barras {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 110px;
+    margin-top: 10px;
+  }
+  .barra {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 4px;
+  }
+  .barra span {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    background: #e9c9a8;
+  }
+  .barra span.pico {
+    background: var(--ferrugem);
+  }
+  .barra small {
+    font-size: 11px;
+    color: #8b7366;
+  }
+  .top__linha {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid #f1e8df;
+  }
+  .top__linha:last-child {
+    border: 0;
+  }
+  .pos {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    background: #fbe9dc;
+    color: var(--ferrugem-escuro);
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+  }
+  .nome {
+    flex: 1;
+    font-weight: 500;
+  }
+  .qtd {
+    color: #8b7366;
+  }
+  @media (max-width: 620px) {
+    .kpis {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .rel__baixo {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

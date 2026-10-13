@@ -1,0 +1,1191 @@
+---
+import Base from '../layouts/Base.astro';
+import Celular from '../components/Celular.astro';
+import Quadro from '../components/Quadro.astro';
+import Relatorio from '../components/Relatorio.astro';
+import { SITE, PLANOS, LANCAMENTO, WHATSAPP, brl, linkWhatsApp, MSG_DEMO } from '../config';
+
+const linkDemo = linkWhatsApp(MSG_DEMO);
+
+const negocios = ['Pizzaria', 'Hamburgueria', 'Açaiteria', 'Lanchonete', 'Restaurante', 'Cafeteria'];
+
+const hojeVoce = [
+  {
+    titulo: 'Anota no WhatsApp ou no papel',
+    texto:
+      'O cliente monta o pedido sozinho, com tamanho, adicionais e observação. Chega escrito no painel e sai impresso na cozinha. Fim do “era sem cebola”.',
+  },
+  {
+    titulo: 'Depende do iFood',
+    texto:
+      'Tenha um canal próprio, com o seu link no Instagram e no WhatsApp. Mensalidade fixa, sem comissão em cada pedido. Quem já te conhece pede direto com você.',
+  },
+  {
+    titulo: 'Já usa outro cardápio digital',
+    texto:
+      'Aqui o estoque baixa sozinho e bloqueia o que acabou. E ainda tem cardápio de revenda separado, preço de clube e todas as lojas num painel só.',
+  },
+];
+
+const dores = [
+  ['Fila no balcão e telefone tocando no pico', 'O cliente pede sozinho pelo celular, antes de chegar ou da mesa.'],
+  ['Pedido errado, item esquecido, observação perdida', 'Tudo chega por escrito, com as escolhas do cliente, e sai impresso.'],
+  ['Cardápio em PDF sempre desatualizado', 'Mudou o preço ou acabou o produto no painel, o cliente já vê.'],
+  ['Vender o que já acabou', 'O estoque baixa a cada pedido, volta se cancelar e trava quando zera.'],
+  ['Promoção difícil de montar', 'Combos com desconto em % ou em reais, em destaque no topo do cardápio.'],
+  ['Não saber quanto vendeu nem o que mais sai', 'Faturamento, ticket médio, horário de pico e mais vendidos, com exportação para Excel.'],
+  ['Cadastrar centenas de produtos à mão', 'Importe a planilha (Excel ou CSV) que você já tem.'],
+  ['Cada loja de um jeito', 'Um painel para todas as unidades, com cópia do cardápio entre elas.'],
+];
+
+const faqs = [
+  {
+    p: 'Meu cliente precisa baixar aplicativo?',
+    r: 'Não. O cardápio abre no navegador do celular, pelo link ou pelo QR Code. O cliente também não precisa criar conta com senha.',
+  },
+  {
+    p: 'E o pagamento e a taxa de entrega?',
+    r: 'Hoje o pagamento é combinado na entrega, na retirada ou na mesa, do jeito que você já recebe (dinheiro, Pix ou maquininha). No delivery, o pedido gera uma mensagem pronta no WhatsApp da loja, onde você confirma o endereço e a taxa. Pagamento online e cálculo da taxa de entrega estão chegando.',
+  },
+  {
+    p: 'Funciona com a minha impressora?',
+    r: 'Funciona com impressora térmica de cupom comum, de 80 mm. Quando você aceita o pedido, o cupom sai na cozinha.',
+  },
+  {
+    p: 'Quanto tempo leva para começar?',
+    r: 'Depende do tamanho do cardápio. Se os produtos já estão numa planilha (Excel ou CSV), a importação é feita de uma vez. Depois é imprimir os QR Codes, testar a impressora e divulgar o link.',
+  },
+  {
+    p: 'Recebe os pedidos do iFood?',
+    r: 'Não. A Prestio é o seu canal próprio de pedidos. Muitas lojas usam os dois: o iFood para quem ainda não as conhece e a Prestio para quem já é cliente, sem comissão.',
+  },
+];
+
+const precoLancamento = (v: number) => brl(v * (1 - LANCAMENTO.desconto));
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Prestio',
+    url: SITE.url,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    description: SITE.descricao,
+    inLanguage: 'pt-BR',
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'BRL',
+      lowPrice: Math.min(...PLANOS.map((p) => p.mensal)),
+      highPrice: Math.max(...PLANOS.map((p) => p.mensal)),
+      offerCount: PLANOS.length,
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.p,
+      acceptedAnswer: { '@type': 'Answer', text: f.r },
+    })),
+  },
+];
+---
+
+<Base jsonLd={jsonLd}>
+  <!-- Topo -->
+  <section class="hero">
+    <div class="container hero__grade">
+      <div class="hero__texto">
+        <span class="selo">Cardápio digital + painel de pedidos</span>
+        <h1>Pedidos do delivery, da retirada e da mesa num lugar só.</h1>
+        <p class="hero__sub">
+          Seu cliente pede pelo celular, pelo link no Instagram, no WhatsApp ou pelo QR Code da mesa. O pedido chega no
+          seu painel, sai impresso na cozinha e baixa o estoque. Sem aplicativo para baixar e sem comissão por pedido.
+        </p>
+        <div class="hero__botoes">
+          <a class="botao" href={linkDemo} target="_blank" rel="noopener">Quero ver funcionando</a>
+          <a class="botao botao--contorno" href="#planos">Ver planos</a>
+        </div>
+        <ul class="hero__garantias">
+          <li>Sem comissão por pedido</li>
+          <li>Implantação grátis no lançamento</li>
+          <li>Funciona no navegador</li>
+        </ul>
+      </div>
+      <div class="hero__visual" aria-hidden="false">
+        <div class="hero__quadro"><Quadro compacto /></div>
+        <Celular tela="loja" class="hero__cel" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Tipos de negócio -->
+  <section class="negocios" aria-label="Para que tipo de negócio">
+    <div class="container negocios__linha">
+      <p>Feito para quem vende comida e bebida:</p>
+      <ul>
+        {negocios.map((n) => <li>{n}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Como funciona -->
+  <section class="secao" id="como-funciona">
+    <div class="container">
+      <div class="secao__intro">
+        <span class="selo">Como funciona</span>
+        <h2>Do celular do cliente para a sua cozinha, em três passos.</h2>
+      </div>
+      <ol class="passos">
+        <li>
+          <span class="passos__n">1</span>
+          <h3>O cliente abre o seu cardápio</h3>
+          <p>Pelo link na bio do Instagram, no WhatsApp ou pelo QR Code da mesa. Escolhe, monta o pedido e confirma.</p>
+        </li>
+        <li>
+          <span class="passos__n">2</span>
+          <h3>O pedido aparece no painel</h3>
+          <p>Com aviso sonoro. Você aceita, escolhe quem vai preparar e o cupom sai na impressora da cozinha.</p>
+        </li>
+        <li>
+          <span class="passos__n">3</span>
+          <h3>Você acompanha e vê os números</h3>
+          <p>O cliente vê o pedido andar em tempo real. Você vê quanto vendeu, o que mais sai e em que horário.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Se hoje você... -->
+  <section class="secao secao--borda">
+    <div class="container">
+      <div class="secao__intro">
+        <span class="selo">Para quem já vende</span>
+        <h2>Seja qual for o seu jeito de vender hoje, fica mais fácil.</h2>
+      </div>
+      <div class="hoje">
+        {hojeVoce.map((h) => (
+          <article class="hoje__card">
+            <p class="hoje__se">Se hoje você</p>
+            <h3>{h.titulo}</h3>
+            <p>{h.texto}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Dores -->
+  <section class="secao secao--clara">
+    <div class="container">
+      <div class="secao__intro">
+        <span class="selo">O dia a dia da loja</span>
+        <h2>O que dá dor de cabeça no balcão, resolvido no painel.</h2>
+      </div>
+      <div class="dores">
+        {dores.map(([dor, solucao]) => (
+          <div class="dor">
+            <p class="dor__problema">{dor}</p>
+            <p class="dor__solucao">{solucao}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Para o cliente (escuro) -->
+  <section class="secao escuro" id="recursos">
+    <div class="container">
+      <div class="secao__intro">
+        <span class="selo selo--claro">Para o seu cliente</span>
+        <h2>Um cardápio digital para delivery que qualquer pessoa consegue usar.</h2>
+        <p>
+          Uma pergunta por tela: tamanho, sabor, adicionais, observação. Até quem não tem costume com tecnologia faz o
+          pedido sem ajuda.
+        </p>
+      </div>
+      <div class="celulares">
+        <figure>
+          <Celular tela="loja" />
+          <figcaption>Sua loja, com delivery, retirada e mesa</figcaption>
+        </figure>
+        <figure>
+          <Celular tela="produto" />
+          <figcaption>O produto montado em etapas</figcaption>
+        </figure>
+        <figure>
+          <Celular tela="acompanhamento" />
+          <figcaption>O pedido acompanhado em tempo real</figcaption>
+        </figure>
+      </div>
+      <p class="arraste arraste--celulares" aria-hidden="true">Arraste para o lado →</p>
+      <ul class="lista-recursos lista-recursos--escura">
+        <li><b>Sem aplicativo e sem senha.</b> Abre no navegador do celular.</li>
+        <li><b>Delivery, retirada e mesa.</b> Você liga só o que usa.</li>
+        <li><b>Mensagem pronta no WhatsApp</b> da loja para cada entrega.</li>
+        <li><b>Promoções e combos</b> em destaque no topo.</li>
+        <li><b>“Meus pedidos”</b>: o cliente encontra os pedidos dele pelo CPF.</li>
+        <li><b>Cardápio sempre atualizado.</b> Acabou no painel, some do cardápio.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Para a equipe -->
+  <section class="secao painel">
+    <div class="container">
+      <div class="secao__intro">
+        <span class="selo">Para a sua equipe</span>
+        <h2>Todo pedido no quadro, do “novo” ao “entregue”.</h2>
+        <p>
+          Os pedidos de todos os canais caem no mesmo quadro, em tempo real. A equipe avança cada pedido de coluna em
+          coluna e ninguém precisa perguntar “esse já saiu?”.
+        </p>
+      </div>
+      <Quadro />
+      <p class="arraste arraste--quadro" aria-hidden="true">Arraste o quadro para o lado →</p>
+      <ul class="lista-recursos">
+        <li><b>Aviso sonoro</b> e notificação na tela quando chega pedido.</li>
+        <li><b>Cupom na impressora térmica</b> comum, de 80 mm, ao aceitar.</li>
+        <li><b>Quem prepara:</b> escolha o atendente ao aceitar o pedido.</li>
+        <li><b>Edite antes de aceitar</b>, cancele com motivo ou volte uma etapa.</li>
+        <li><b>Pedido por QR Code na mesa:</b> a mesa pede quantas vezes quiser e tudo vai para a mesma conta.</li>
+        <li><b>No computador ou no celular</b>, e dá para instalar o painel como aplicativo.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Para o dono -->
+  <section class="secao secao--borda">
+    <div class="container dono">
+      <div>
+        <span class="selo">Para quem é dono</span>
+        <h2>Seus números, sem planilha.</h2>
+        <p class="dono__sub">
+          Saiba quanto vendeu, o que mais sai, em que horário a cozinha aperta e quem atende mais. Exporte tudo para
+          Excel quando quiser.
+        </p>
+        <ul class="dono__lista">
+          <li>
+            <h3>Relatórios de verdade</h3>
+            <p>Faturamento, ticket médio, canal mais usado, cancelamentos, tempo de preparo, clientes novos e recorrentes.</p>
+          </li>
+          <li>
+            <h3>Cardápio digital com estoque</h3>
+            <p>O estoque baixa a cada pedido, volta se cancelar e bloqueia o produto quando acaba.</p>
+          </li>
+          <li>
+            <h3>Importação por planilha</h3>
+            <p>Traga os produtos do sistema que você já usa, em Excel ou CSV, sem apagar o que foi feito à mão.</p>
+          </li>
+          <li>
+            <h3>Sistema de pedidos para franquia e redes</h3>
+            <p>Todas as unidades num painel só. Troque de loja num clique e copie o cardápio de uma para outra.</p>
+          </li>
+        </ul>
+      </div>
+      <Relatorio />
+    </div>
+  </section>
+
+  <!-- Diferenciais -->
+  <section class="secao secao--clara">
+    <div class="container">
+      <div class="secao__intro">
+        <span class="selo">O que poucos têm</span>
+        <h2>Feito para quem vende de mais de um jeito.</h2>
+      </div>
+      <div class="difs">
+        <article class="dif">
+          <span class="dif__tag">Revenda</span>
+          <h3>Cardápio separado para revendedores</h3>
+          <p>
+            Vende no atacado? Seus revendedores pedem por um link próprio, com preço e estoque separados do varejo. Nada
+            de pedido perdido no WhatsApp.
+          </p>
+        </article>
+        <article class="dif">
+          <span class="dif__tag">Preço de clube</span>
+          <h3>Preço especial para o cliente fiel</h3>
+          <p>
+            Mostre o preço de clube ao lado do preço normal e marque, no fechamento, quem é do clube. Ótimo para quem já
+            tem programa de clientes.
+          </p>
+        </article>
+        <article class="dif">
+          <span class="dif__tag">Seguro</span>
+          <h3>Ninguém mexe no seu preço</h3>
+          <p>
+            O valor é sempre calculado no servidor, cada loja só enxerga os próprios dados e mudar um preço não altera
+            pedidos já feitos.
+          </p>
+        </article>
+      </div>
+      <div class="breve">
+        <p class="breve__titulo">Chegando em breve</p>
+        <ul>
+          <li>Pagamento online pelo cardápio</li>
+          <li>Taxa e área de entrega</li>
+          <li>Nota fiscal</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Planos -->
+  <section class="secao" id="planos">
+    <div class="container">
+      <div class="secao__intro secao__intro--centro">
+        <span class="selo">Planos</span>
+        <h2>Mensalidade fixa por loja. Sem comissão por pedido.</h2>
+        {LANCAMENTO.ativo && (
+          <p>
+            Condição de lançamento: <b>implantação grátis</b> e <b>{LANCAMENTO.desconto * 100}% de desconto</b> nos{' '}
+            {LANCAMENTO.meses} primeiros meses.
+          </p>
+        )}
+      </div>
+
+      <div class="planos">
+        <fieldset class="periodo">
+          <legend class="sr-only">Período de cobrança</legend>
+          <label><input type="radio" name="periodo" value="mensal" checked /> <span>Mensal</span></label>
+          <label><input type="radio" name="periodo" value="anual" /> <span>Anual <small>2 meses grátis</small></span></label>
+        </fieldset>
+
+        <div class="planos__grade">
+          {PLANOS.map((p) => (
+            <article class={`plano ${p.destaque ? 'plano--destaque' : ''}`}>
+              {p.destaque && <span class="plano__fita">Mais escolhido</span>}
+              <h3>{p.nome}</h3>
+              <p class="plano__publico">{p.publico}</p>
+
+              <div class="preco preco--mensal">
+                <p class="preco__valor">{brl(p.mensal)}<span>{p.sufixo}</span></p>
+                {LANCAMENTO.ativo && (
+                  <p class="preco__nota">
+                    {precoLancamento(p.mensal)}{p.sufixo} nos {LANCAMENTO.meses} primeiros meses
+                  </p>
+                )}
+              </div>
+              <div class="preco preco--anual">
+                <p class="preco__valor">
+                  {brl(p.anual)}<span>/ano{p.sufixo.includes('loja') ? ' por loja' : ''}</span>
+                </p>
+                <p class="preco__nota">Equivale a {brl(p.anual / 12)} por mês</p>
+              </div>
+
+              <p class="plano__pedidos">{p.pedidos}</p>
+              <ul class="plano__itens">
+                {p.itens.map((i) => <li>{i}</li>)}
+              </ul>
+              <p class="plano__implantacao">
+                <b>Implantação:</b> {p.implantacao.toLowerCase()}{LANCAMENTO.ativo && ', grátis no lançamento'}.
+              </p>
+              <a
+                class={`botao ${p.destaque ? '' : 'botao--contorno'}`}
+                href={linkWhatsApp(`Olá! Tenho interesse no plano ${p.nome} da Prestio.`)}
+                target="_blank"
+                rel="noopener"
+              >
+                Quero o {p.nome}
+              </a>
+            </article>
+          ))}
+        </div>
+        <p class="planos__rodape">
+          Passou do limite de pedidos? Nenhum pedido é bloqueado: no mês seguinte a loja passa para o plano de cima.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dúvidas -->
+  <section class="secao secao--borda" id="duvidas">
+    <div class="container duvidas">
+      <div>
+        <span class="selo">Dúvidas</span>
+        <h2>Perguntas frequentes</h2>
+        <p class="duvidas__sub">
+          Não achou a sua? <a href={linkDemo} target="_blank" rel="noopener">Pergunte pelo WhatsApp</a>.
+        </p>
+      </div>
+      <div class="faq">
+        {faqs.map((f) => (
+          <details>
+            <summary>{f.p}</summary>
+            <p>{f.r}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Chamada final -->
+  <section class="secao final" id="contato">
+    <div class="container final__grade">
+      <div>
+        <span class="selo selo--claro">Vamos conversar</span>
+        <h2>Veja a Prestio funcionando com o cardápio da sua loja.</h2>
+        <p class="final__sub">
+          Preencha os dados e a conversa abre no nosso WhatsApp, com tudo já escrito. A gente responde de
+          {' '}{WHATSAPP.horario}.
+        </p>
+        <a class="final__whats" href={linkDemo} target="_blank" rel="noopener">Ou chame direto: {WHATSAPP.exibicao}</a>
+      </div>
+      <form class="form" id="form-contato" novalidate>
+        <label>
+          Seu nome
+          <input name="nome" autocomplete="name" required placeholder="Maria Souza" />
+        </label>
+        <label>
+          Nome da loja
+          <input name="loja" autocomplete="organization" required placeholder="Pizzaria do Bairro" />
+        </label>
+        <div class="form__dupla">
+          <label>
+            Cidade
+            <input name="cidade" autocomplete="address-level2" required placeholder="Porto Alegre" />
+          </label>
+          <label>
+            Unidades
+            <select name="unidades" required>
+              <option value="1">1 loja</option>
+              <option value="2 a 3">2 a 3</option>
+              <option value="4 a 10">4 a 10</option>
+              <option value="mais de 10">Mais de 10</option>
+            </select>
+          </label>
+        </div>
+        <label>
+          <span>Como recebe pedidos hoje? <span class="opcional">(opcional)</span></span>
+          <input name="hoje" placeholder="WhatsApp, iFood, balcão…" />
+        </label>
+        <p class="form__erro" role="alert" hidden>Preencha nome, loja e cidade para continuar.</p>
+        <button class="botao" type="submit">Chamar no WhatsApp</button>
+        <p class="form__nota">Seus dados vão só na mensagem do WhatsApp. Este site não guarda nada.</p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script define:vars={{ numero: WHATSAPP.numero }}>
+  const form = document.getElementById('form-contato');
+  const erro = form.querySelector('.form__erro');
+  form.addEventListener('input', () => (erro.hidden = true));
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(form));
+    if (!d.nome.trim() || !d.loja.trim() || !d.cidade.trim()) {
+      erro.hidden = false;
+      return;
+    }
+    const linhas = [
+      'Olá! Quero conhecer a Prestio.',
+      `Nome: ${d.nome.trim()}`,
+      `Loja: ${d.loja.trim()}`,
+      `Cidade: ${d.cidade.trim()}`,
+      `Unidades: ${d.unidades}`,
+    ];
+    erro.hidden = true;
+    if (d.hoje.trim()) linhas.push(`Hoje recebo pedidos por: ${d.hoje.trim()}`);
+    window.open(`https://wa.me/${numero}?text=${encodeURIComponent(linhas.join('\n'))}`, '_blank', 'noopener');
+  });
+</script>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* Hero */
+  .hero {
+    padding: clamp(40px, 7vw, 88px) 0 clamp(56px, 8vw, 100px);
+    overflow: hidden;
+  }
+  .hero__grade {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 48px;
+    align-items: center;
+  }
+  .hero__sub {
+    font-size: 1.15rem;
+    color: var(--texto-2);
+    margin: 22px 0 30px;
+    max-width: 560px;
+  }
+  .hero__botoes {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .hero__garantias {
+    list-style: none;
+    padding: 0;
+    margin: 28px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    font-size: 0.92rem;
+    color: var(--texto-2);
+  }
+  .hero__garantias li::before {
+    content: '✓';
+    color: var(--ferrugem);
+    font-weight: 700;
+    margin-right: 6px;
+  }
+  .hero__visual {
+    position: relative;
+    min-height: 520px;
+  }
+  .hero__quadro {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: -120px;
+  }
+  .hero__visual :global(.hero__cel) {
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+    transform: rotate(3deg);
+  }
+  @media (max-width: 960px) {
+    .hero__grade {
+      grid-template-columns: 1fr;
+    }
+    .hero__visual {
+      min-height: 0;
+      display: flex;
+      justify-content: center;
+    }
+    .hero__quadro {
+      display: none;
+    }
+    .hero__visual :global(.hero__cel) {
+      position: static;
+      transform: none;
+    }
+  }
+
+  /* Negócios */
+  .negocios {
+    background: var(--chocolate);
+    color: var(--creme);
+    padding: 22px 0;
+  }
+  .negocios__linha {
+    display: flex;
+    align-items: center;
+    gap: 12px 24px;
+    flex-wrap: wrap;
+  }
+  .negocios__linha > p {
+    font-weight: 600;
+    color: var(--laranja);
+    font-size: 0.95rem;
+  }
+  .negocios ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    font-family: var(--titulo);
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  /* Seções */
+  .secao--borda {
+    border-top: 1px solid var(--linha);
+  }
+  .secao--clara {
+    background: var(--branco);
+  }
+  .secao__intro--centro {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .selo--claro {
+    color: var(--caramelo);
+  }
+
+  /* Passos */
+  .passos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .passos li {
+    background: var(--branco);
+    border: 1px solid var(--linha);
+    border-radius: var(--raio);
+    padding: 28px;
+  }
+  .passos__n {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--ferrugem);
+    color: var(--creme);
+    font: 800 1.2rem var(--titulo);
+    margin-bottom: 20px;
+  }
+  .passos p {
+    margin-top: 10px;
+    color: var(--texto-2);
+  }
+
+  /* Se hoje você */
+  .hoje {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .hoje__card {
+    padding: 28px;
+    border-radius: var(--raio);
+    background: var(--creme-2);
+  }
+  .hoje__se {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ferrugem);
+    margin-bottom: 4px;
+  }
+  .hoje__card h3 {
+    margin-bottom: 12px;
+  }
+  .hoje__card p:last-child {
+    color: var(--texto-2);
+  }
+
+  /* Dores */
+  .dores {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 48px;
+  }
+  .dor {
+    padding: 22px 0;
+    border-top: 1px solid var(--linha);
+  }
+  .dor__problema {
+    font-family: var(--titulo);
+    font-weight: 700;
+    font-size: 1.12rem;
+    letter-spacing: -0.01em;
+    text-decoration: line-through;
+    text-decoration-color: rgba(181, 84, 31, 0.55);
+    text-decoration-thickness: 2px;
+  }
+  .dor__solucao {
+    color: var(--texto-2);
+    margin-top: 6px;
+  }
+  .dor__solucao::before {
+    content: '→ ';
+    color: var(--ferrugem);
+    font-weight: 700;
+  }
+
+  /* Escuro: cliente */
+  .escuro {
+    background: var(--cardapio);
+    color: var(--creme);
+  }
+  .escuro .secao__intro p {
+    color: #c9b4a4;
+  }
+  .celulares {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .celulares figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .celulares figure:nth-child(2) {
+    transform: translateY(-24px);
+  }
+  .celulares figcaption {
+    color: #c9b4a4;
+    font-size: 0.95rem;
+  }
+  @media (max-width: 860px) {
+    .celulares {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      justify-content: flex-start;
+      scroll-snap-type: x mandatory;
+      margin: 0 -20px;
+      padding: 0 20px 12px;
+    }
+    .celulares figure {
+      scroll-snap-align: center;
+    }
+    .celulares figure:nth-child(2) {
+      transform: none;
+    }
+  }
+
+  .arraste {
+    display: none;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ferrugem);
+    margin-top: 12px;
+  }
+  .escuro .arraste {
+    color: var(--caramelo);
+  }
+  @media (max-width: 860px) {
+    .arraste--celulares {
+      display: block;
+    }
+  }
+  @media (max-width: 560px) {
+    .arraste--quadro {
+      display: block;
+    }
+  }
+
+  .lista-recursos {
+    list-style: none;
+    padding: 0;
+    margin: 56px 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px 32px;
+    color: var(--texto-2);
+  }
+  .lista-recursos li {
+    padding-left: 22px;
+    position: relative;
+  }
+  .lista-recursos li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--ferrugem);
+  }
+  .lista-recursos b {
+    color: var(--chocolate);
+  }
+  .lista-recursos--escura {
+    color: #c9b4a4;
+  }
+  .lista-recursos--escura b {
+    color: var(--creme);
+  }
+  .lista-recursos--escura li::before {
+    background: var(--caramelo);
+  }
+
+  /* Painel */
+  .painel {
+    background: var(--painel);
+  }
+
+  /* Dono */
+  .dono {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 56px;
+    align-items: center;
+  }
+  .dono__sub {
+    margin: 16px 0 28px;
+    font-size: 1.1rem;
+    color: var(--texto-2);
+  }
+  .dono__lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 20px;
+  }
+  .dono__lista h3 {
+    font-size: 1.1rem;
+  }
+  .dono__lista p {
+    color: var(--texto-2);
+    margin-top: 4px;
+  }
+
+  /* Diferenciais */
+  .difs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .dif {
+    border: 1px solid var(--linha);
+    border-radius: var(--raio);
+    padding: 28px;
+    background: var(--creme);
+  }
+  .dif__tag {
+    display: inline-block;
+    background: var(--chocolate);
+    color: var(--laranja);
+    font-weight: 600;
+    font-size: 0.8rem;
+    border-radius: 999px;
+    padding: 4px 12px;
+    margin-bottom: 18px;
+  }
+  .dif p {
+    color: var(--texto-2);
+    margin-top: 10px;
+  }
+  .breve {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    border: 1.5px dashed var(--linha);
+    border-radius: var(--raio);
+    padding: 18px 24px;
+  }
+  .breve__titulo {
+    font-weight: 700;
+    color: var(--ferrugem);
+  }
+  .breve ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .breve li {
+    background: var(--creme-2);
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-size: 0.95rem;
+  }
+
+  /* Planos */
+  .periodo {
+    border: 0;
+    padding: 4px;
+    margin: 0 auto 32px;
+    display: flex;
+    width: fit-content;
+    background: var(--creme-2);
+    border-radius: 999px;
+  }
+  .periodo label {
+    cursor: pointer;
+  }
+  .periodo input {
+    position: absolute;
+    opacity: 0;
+  }
+  .periodo span {
+    display: block;
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .periodo small {
+    color: var(--ferrugem);
+    font-weight: 600;
+    margin-left: 4px;
+  }
+  .periodo input:checked + span {
+    background: var(--chocolate);
+    color: var(--creme);
+  }
+  .periodo input:checked + span small {
+    color: var(--laranja);
+  }
+  .periodo input:focus-visible + span {
+    outline: 3px solid var(--laranja);
+    outline-offset: 2px;
+  }
+  .planos__grade {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    align-items: stretch;
+  }
+  .plano {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--branco);
+    border: 1px solid var(--linha);
+    border-radius: 20px;
+    padding: 32px 28px;
+  }
+  .plano--destaque {
+    border: 2px solid var(--ferrugem);
+  }
+  .plano__fita {
+    position: absolute;
+    top: -13px;
+    left: 28px;
+    background: var(--ferrugem);
+    color: var(--creme);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 999px;
+  }
+  .plano h3 {
+    font-size: 1.5rem;
+  }
+  .plano__publico {
+    color: var(--texto-2);
+    margin: 6px 0 20px;
+    min-height: 3.2em;
+  }
+  .preco__valor {
+    font: 800 2.4rem/1 var(--titulo);
+    letter-spacing: -0.03em;
+  }
+  .preco__valor span {
+    font: 500 1rem var(--corpo);
+    color: var(--texto-2);
+    letter-spacing: 0;
+    margin-left: 4px;
+  }
+  .preco__nota {
+    margin-top: 8px;
+    font-size: 0.92rem;
+    color: var(--ferrugem-escuro);
+    font-weight: 600;
+  }
+  .preco--anual {
+    display: none;
+  }
+  .planos:has(input[value='anual']:checked) .preco--anual {
+    display: block;
+  }
+  .planos:has(input[value='anual']:checked) .preco--mensal {
+    display: none;
+  }
+  .plano__pedidos {
+    margin: 22px 0 14px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--creme);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .plano__itens {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    display: grid;
+    gap: 8px;
+    flex: 1;
+  }
+  .plano__itens li {
+    padding-left: 24px;
+    position: relative;
+    font-size: 0.97rem;
+  }
+  .plano__itens li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--ferrugem);
+    font-weight: 700;
+  }
+  .plano__implantacao {
+    font-size: 0.9rem;
+    color: var(--texto-2);
+    margin-bottom: 22px;
+  }
+  .planos__rodape {
+    text-align: center;
+    margin-top: 28px;
+    color: var(--texto-2);
+    font-size: 0.95rem;
+  }
+
+  /* Dúvidas */
+  .duvidas {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 56px;
+  }
+  .duvidas__sub {
+    margin-top: 16px;
+    color: var(--texto-2);
+  }
+  .duvidas__sub a {
+    color: var(--ferrugem);
+    font-weight: 600;
+  }
+  .faq details {
+    border-bottom: 1px solid var(--linha);
+  }
+  .faq summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 20px 36px 20px 0;
+    position: relative;
+    font-family: var(--titulo);
+    font-weight: 700;
+    font-size: 1.12rem;
+    letter-spacing: -0.01em;
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq summary::after {
+    content: '+';
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--ferrugem);
+    transition: transform 0.2s;
+  }
+  .faq details[open] summary::after {
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .faq details p {
+    padding: 0 0 22px;
+    color: var(--texto-2);
+    max-width: 640px;
+  }
+
+  /* Final */
+  .final {
+    background: var(--chocolate);
+    color: var(--creme);
+  }
+  .final__grade {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: center;
+  }
+  .final__sub {
+    margin: 18px 0 22px;
+    color: #d9c8ba;
+    font-size: 1.1rem;
+  }
+  .final__whats {
+    color: var(--laranja);
+    font-weight: 600;
+  }
+  .form {
+    background: var(--creme);
+    color: var(--chocolate);
+    border-radius: 20px;
+    padding: 28px;
+    display: grid;
+    gap: 16px;
+  }
+  .form label {
+    display: grid;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .opcional {
+    font-weight: 400;
+    color: var(--texto-2);
+  }
+  .form input,
+  .form select {
+    font: inherit;
+    font-weight: 400;
+    font-size: 16px;
+    height: 50px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--linha);
+    background: var(--branco);
+    color: var(--chocolate);
+    width: 100%;
+  }
+  .form input:focus,
+  .form select:focus {
+    outline: none;
+    border-color: var(--ferrugem);
+    box-shadow: 0 0 0 3px rgba(181, 84, 31, 0.15);
+  }
+  .form__dupla {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 12px;
+  }
+  .form__erro {
+    color: #a3261b;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+  .form .botao {
+    width: 100%;
+  }
+  .form__nota {
+    font-size: 0.85rem;
+    color: var(--texto-2);
+    text-align: center;
+  }
+
+  @media (max-width: 960px) {
+    .passos,
+    .hoje,
+    .difs,
+    .planos__grade {
+      grid-template-columns: 1fr;
+    }
+    .lista-recursos {
+      grid-template-columns: 1fr 1fr;
+    }
+    .dono,
+    .duvidas,
+    .final__grade {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .plano__publico {
+      min-height: 0;
+    }
+  }
+  @media (max-width: 640px) {
+    .dores,
+    .lista-recursos {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

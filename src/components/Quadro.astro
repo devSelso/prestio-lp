@@ -1,0 +1,213 @@
+---
+// Quadro de pedidos do painel desenhado em HTML (dados de exemplo).
+interface Props {
+  compacto?: boolean;
+}
+const { compacto = false } = Astro.props;
+
+const colunas = [
+  {
+    nome: 'Novos',
+    cor: 'novo',
+    pedidos: [
+      { id: '#131', canal: 'Delivery', itens: '2× Pizza calabresa', obs: 'Sem cebola', hora: 'agora' },
+      { id: 'Mesa 4', canal: 'Mesa', itens: '1× Burger + fritas', hora: '1 min' },
+    ],
+  },
+  {
+    nome: 'Em preparo',
+    cor: 'preparo',
+    pedidos: [
+      { id: '#129', canal: 'Retirada', itens: '3× Açaí 500 ml', hora: '6 min', quem: 'Ana' },
+      { id: '#128', canal: 'Delivery', itens: '1× Bacon duplo', hora: '9 min', quem: 'Léo' },
+    ],
+  },
+  {
+    nome: 'Prontos',
+    cor: 'pronto',
+    pedidos: [{ id: '#126', canal: 'Retirada', itens: '1× Marmita fit', hora: '14 min' }],
+  },
+  {
+    nome: 'Entregues',
+    cor: 'entregue',
+    pedidos: [{ id: '#124', canal: 'Delivery', itens: '2× Hot dog', hora: '22 min' }],
+  },
+];
+const visiveis = compacto ? colunas.slice(0, 3) : colunas;
+---
+
+<div class="quadro" role="img" aria-label="Quadro de pedidos com as colunas Novos, Em preparo, Prontos e Entregues">
+  <div class="quadro__barra">
+    <span class="bolinhas"><i></i><i></i><i></i></span>
+    <span class="quadro__titulo">Pedidos de hoje</span>
+    <span class="aviso"><i class="pulso"></i>Novo pedido #131</span>
+  </div>
+  <div class="quadro__colunas" style={`--n:${visiveis.length}`}>
+    {visiveis.map((c) => (
+      <div class="coluna">
+        <p class={`coluna__nome ${c.cor}`}>{c.nome} <span>{c.pedidos.length}</span></p>
+        {c.pedidos.map((p, i) => (
+          <div class={`card ${c.cor === 'novo' && i === 0 ? 'card--novo' : ''}`}>
+            <div class="card__topo">
+              <b>{p.id}</b>
+              <span>{p.hora}</span>
+            </div>
+            <p class="card__canal">{p.canal}</p>
+            <p class="card__itens">{p.itens}</p>
+            {p.obs && <p class="card__obs">Obs: {p.obs}</p>}
+            {p.quem && <p class="card__quem">Preparando: {p.quem}</p>}
+            {c.cor === 'novo' && <span class="card__botao">Aceitar e imprimir</span>}
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .quadro {
+    background: var(--painel);
+    color: var(--painel-texto);
+    border-radius: 18px;
+    border: 1px solid #e4d8cd;
+    box-shadow: 0 30px 70px -30px rgba(34, 21, 15, 0.4);
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+  p {
+    margin: 0;
+  }
+  .quadro__barra {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid #ece2d8;
+  }
+  .bolinhas {
+    display: flex;
+    gap: 5px;
+  }
+  .bolinhas i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #e4d8cd;
+  }
+  .quadro__titulo {
+    font: 700 14px var(--titulo);
+  }
+  .aviso {
+    margin-left: auto;
+    background: #fbe9dc;
+    color: var(--ferrugem-escuro);
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  .pulso {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ferrugem);
+    margin-right: 6px;
+    vertical-align: 1px;
+    animation: pulso 1.6s ease-out infinite;
+  }
+  @keyframes pulso {
+    0% {
+      box-shadow: 0 0 0 0 rgba(181, 84, 31, 0.5);
+    }
+    100% {
+      box-shadow: 0 0 0 8px rgba(181, 84, 31, 0);
+    }
+  }
+  .quadro__colunas {
+    display: grid;
+    grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+    gap: 10px;
+    padding: 14px;
+  }
+  .coluna__nome {
+    font-weight: 700;
+    font-size: 12px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .coluna__nome span {
+    background: #ece2d8;
+    border-radius: 999px;
+    padding: 0 7px;
+    font-size: 11px;
+  }
+  .novo {
+    color: var(--ferrugem);
+  }
+  .card {
+    background: #fff;
+    border: 1px solid #ece2d8;
+    border-radius: 10px;
+    padding: 9px;
+    margin-bottom: 8px;
+  }
+  .card--novo {
+    border-color: var(--ferrugem);
+    box-shadow: 0 0 0 3px rgba(181, 84, 31, 0.12);
+  }
+  .card__topo {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+  .card__topo span {
+    color: #8b7366;
+    font-size: 11px;
+  }
+  .card__canal {
+    color: #8b7366;
+    font-size: 11px;
+  }
+  .card__itens {
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  .card__obs {
+    margin-top: 4px;
+    background: #fdf3e7;
+    color: #8a4a12;
+    border-radius: 6px;
+    padding: 3px 6px;
+    font-size: 11px;
+  }
+  .card__quem {
+    color: #8b7366;
+    font-size: 11px;
+    margin-top: 4px;
+  }
+  .card__botao {
+    display: block;
+    margin-top: 8px;
+    background: var(--chocolate);
+    color: var(--creme);
+    text-align: center;
+    border-radius: 7px;
+    padding: 6px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  @media (max-width: 560px) {
+    .quadro__colunas {
+      grid-template-columns: repeat(var(--n), 150px);
+      overflow-x: auto;
+    }
+    .aviso {
+      display: none;
+    }
+  }
+</style>

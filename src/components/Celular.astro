@@ -1,0 +1,384 @@
+---
+// Telas do cardápio desenhadas em HTML (dados de exemplo).
+interface Props {
+  tela: 'loja' | 'produto' | 'acompanhamento';
+  class?: string;
+}
+const { tela, class: classe = '' } = Astro.props;
+---
+
+<div class={`cel ${classe}`} role="img" aria-label={
+  tela === 'loja'
+    ? 'Cardápio da loja no celular, com delivery, retirada e mesa'
+    : tela === 'produto'
+      ? 'Escolha do produto em etapas, uma pergunta por tela'
+      : 'Acompanhamento do pedido em tempo real'
+}>
+  <div class="cel__tela">
+    {tela === 'loja' && (
+      <>
+        <div class="loja__capa">
+          <span class="loja__avatar">B</span>
+        </div>
+        <p class="loja__nome">Brasa Burger</p>
+        <p class="loja__info"><span class="ponto"></span> Aberto até 23h · entrega em ~40 min</p>
+        <div class="chips">
+          <span class="chip chip--ativo">Delivery</span>
+          <span class="chip">Retirada</span>
+          <span class="chip">Mesa</span>
+        </div>
+        <div class="promo">
+          <span class="promo__tag">−15%</span>
+          <div>
+            <p class="promo__titulo">Combo da casa</p>
+            <p class="promo__sub">2 burgers + fritas + 2 refris</p>
+          </div>
+        </div>
+        <p class="cat">Burgers</p>
+        <div class="item">
+          <div class="item__foto f1"></div>
+          <div class="item__txt">
+            <p class="item__nome">Bacon duplo</p>
+            <p class="item__preco">R$ 38,90 <span class="clube">Clube R$ 34,90</span></p>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item__foto f2"></div>
+          <div class="item__txt">
+            <p class="item__nome">Clássico da brasa</p>
+            <p class="item__preco">R$ 29,90</p>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item__foto f3"></div>
+          <div class="item__txt">
+            <p class="item__nome">Smash cheddar</p>
+            <p class="item__preco">R$ 32,90</p>
+          </div>
+        </div>
+      </>
+    )}
+
+    {tela === 'produto' && (
+      <>
+        <p class="voltar">‹ Bacon duplo</p>
+        <div class="passos"><span class="on"></span><span class="on"></span><span></span><span></span></div>
+        <p class="etapa">Passo 2 de 4</p>
+        <p class="pergunta">Qual o ponto da carne?</p>
+        <div class="opcao">Mal passada</div>
+        <div class="opcao opcao--ativa">Ao ponto <span class="check">✓</span></div>
+        <div class="opcao">Bem passada</div>
+        <p class="obs">Observação</p>
+        <div class="campo">Sem cebola, por favor</div>
+        <div class="cta">Continuar · R$ 38,90</div>
+      </>
+    )}
+
+    {tela === 'acompanhamento' && (
+      <>
+        <p class="voltar">Pedido #128</p>
+        <p class="pergunta">Seu pedido está em preparo</p>
+        <p class="loja__info">Delivery · previsão 19h42</p>
+        <ol class="linha">
+          <li class="feito"><b>Recebido</b><span>19h05</span></li>
+          <li class="feito atual"><b>Em preparo</b><span>19h08</span></li>
+          <li><b>Pronto</b><span>—</span></li>
+          <li><b>Entregue</b><span>—</span></li>
+        </ol>
+        <div class="resumo">
+          <p>1× Bacon duplo</p>
+          <p>1× Fritas grande</p>
+          <p class="total">Total R$ 52,80</p>
+        </div>
+      </>
+    )}
+  </div>
+</div>
+
+<style>
+  .cel {
+    width: 248px;
+    aspect-ratio: 9 / 18.5;
+    background: #0e0907;
+    border-radius: 38px;
+    padding: 9px;
+    box-shadow:
+      0 30px 60px -20px rgba(34, 21, 15, 0.45),
+      0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+    flex-shrink: 0;
+  }
+  .cel__tela {
+    height: 100%;
+    border-radius: 30px;
+    background: var(--cardapio);
+    color: var(--creme);
+    padding: 18px 16px;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+  p {
+    margin: 0;
+  }
+
+  .loja__capa {
+    height: 74px;
+    margin: -18px -16px 0;
+    background:
+      radial-gradient(circle at 30% 40%, #6b3a1e, transparent 60%),
+      linear-gradient(135deg, #3d2318, #1b110e);
+    position: relative;
+  }
+  .loja__avatar {
+    position: absolute;
+    left: 16px;
+    bottom: -18px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--caramelo);
+    color: var(--cardapio);
+    font: 800 18px var(--titulo);
+    display: grid;
+    place-items: center;
+    border: 3px solid var(--cardapio);
+  }
+  .loja__nome {
+    font: 700 17px var(--titulo);
+    margin-top: 26px;
+  }
+  .loja__info {
+    color: #b9a293;
+    font-size: 11px;
+    margin-top: 2px;
+  }
+  .ponto {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #6fcf7c;
+    vertical-align: 1px;
+  }
+  .chips {
+    display: flex;
+    gap: 6px;
+    margin: 12px 0;
+  }
+  .chip {
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid #4a342b;
+    color: #d6c3b5;
+  }
+  .chip--ativo {
+    background: var(--caramelo);
+    border-color: var(--caramelo);
+    color: var(--cardapio);
+    font-weight: 600;
+  }
+  .promo {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: var(--cardapio-2);
+    border: 1px solid rgba(232, 167, 92, 0.45);
+    border-radius: 14px;
+    padding: 10px;
+  }
+  .promo__tag {
+    background: var(--caramelo);
+    color: var(--cardapio);
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 6px 7px;
+    font-size: 11px;
+  }
+  .promo__titulo {
+    font-weight: 600;
+  }
+  .promo__sub {
+    color: #b9a293;
+    font-size: 11px;
+  }
+  .cat {
+    font: 700 13px var(--titulo);
+    margin: 14px 0 8px;
+  }
+  .item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid #2f201a;
+  }
+  .item__foto {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+  .f1 {
+    background: radial-gradient(circle at 50% 60%, #c46a2c 0 40%, #7a3a17 41% 55%, #e7b46a 56%);
+  }
+  .f2 {
+    background: radial-gradient(circle at 50% 55%, #8f4a22 0 38%, #e2a85c 39% 58%, #5c3220 59%);
+  }
+  .f3 {
+    background: radial-gradient(circle at 50% 50%, #f0b43c 0 30%, #9a4f24 31% 52%, #d79a55 53%);
+  }
+  .item__nome {
+    font-weight: 600;
+  }
+  .item__preco {
+    color: #d6c3b5;
+    font-size: 11px;
+  }
+  .clube {
+    color: var(--caramelo);
+    font-weight: 600;
+    margin-left: 4px;
+  }
+
+  .voltar {
+    color: #b9a293;
+    font-size: 12px;
+    margin-bottom: 14px;
+  }
+  .passos {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 14px;
+  }
+  .passos span {
+    flex: 1;
+    height: 4px;
+    border-radius: 4px;
+    background: #3a2922;
+  }
+  .passos .on {
+    background: var(--caramelo);
+  }
+  .etapa {
+    color: var(--caramelo);
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .pergunta {
+    font: 700 19px/1.15 var(--titulo);
+    margin: 4px 0 16px;
+  }
+  .opcao {
+    border: 1px solid #4a342b;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .opcao--ativa {
+    border-color: var(--caramelo);
+    background: rgba(232, 167, 92, 0.1);
+  }
+  .check {
+    color: var(--caramelo);
+    font-weight: 700;
+  }
+  .obs {
+    color: #b9a293;
+    font-size: 11px;
+    margin: 14px 0 6px;
+  }
+  .campo {
+    border-radius: 10px;
+    background: var(--cardapio-2);
+    padding: 10px;
+    color: #d6c3b5;
+  }
+  .cta {
+    margin-top: 22px;
+    background: var(--caramelo);
+    color: var(--cardapio);
+    font-weight: 700;
+    text-align: center;
+    border-radius: 14px;
+    padding: 13px;
+    font-size: 13px;
+  }
+
+  .linha {
+    list-style: none;
+    margin: 20px 0;
+    padding: 0 0 0 4px;
+  }
+  .linha li {
+    position: relative;
+    padding: 0 0 18px 22px;
+    display: flex;
+    justify-content: space-between;
+    color: #7f675a;
+  }
+  .linha li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #4a342b;
+    background: var(--cardapio);
+  }
+  .linha li::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 17px;
+    bottom: 1px;
+    width: 2px;
+    background: #3a2922;
+  }
+  .linha li:last-child::after {
+    display: none;
+  }
+  .linha .feito {
+    color: var(--creme);
+  }
+  .linha .feito::before {
+    background: var(--caramelo);
+    border-color: var(--caramelo);
+  }
+  .linha .feito::after {
+    background: var(--caramelo);
+  }
+  .linha .atual::after {
+    background: #3a2922;
+  }
+  .linha .atual::before {
+    box-shadow: 0 0 0 5px rgba(232, 167, 92, 0.2);
+  }
+  .linha b {
+    font-weight: 600;
+  }
+  .linha span {
+    font-size: 11px;
+  }
+  .resumo {
+    background: var(--cardapio-2);
+    border-radius: 14px;
+    padding: 12px;
+    color: #d6c3b5;
+  }
+  .resumo p + p {
+    margin-top: 4px;
+  }
+  .total {
+    color: var(--creme);
+    font-weight: 700;
+    border-top: 1px solid #3a2922;
+    padding-top: 8px;
+    margin-top: 8px !important;
+  }
+</style>

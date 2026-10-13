@@ -1,0 +1,94 @@
+---
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/figtree';
+import '../styles/global.css';
+import { SITE, WHATSAPP, linkWhatsApp, MSG_DEMO } from '../config';
+
+interface Props {
+  title?: string;
+  description?: string;
+  jsonLd?: object;
+}
+
+const { title = SITE.titulo, description = SITE.descricao, jsonLd } = Astro.props;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const ano = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#F5EEE6" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Prestio" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/og-prestio.png', SITE.url).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+    <header class="topo">
+      <div class="container topo__linha">
+        <a href="/" class="topo__logo" aria-label="Prestio, página inicial">
+          <img src="/marca/prestio-logo.svg" alt="Prestio" width="118" height="39" />
+        </a>
+        <nav class="topo__nav" aria-label="Principal">
+          <a href="/#como-funciona">Como funciona</a>
+          <a href="/#recursos">Recursos</a>
+          <a href="/#planos">Planos</a>
+          <a href="/#duvidas">Dúvidas</a>
+        </nav>
+        <a class="botao botao--pequeno" href={linkWhatsApp(MSG_DEMO)} target="_blank" rel="noopener">
+          Falar no WhatsApp
+        </a>
+      </div>
+    </header>
+
+    <main id="conteudo">
+      <slot />
+    </main>
+
+    <footer class="rodape">
+      <div class="container rodape__grade">
+        <div>
+          <img src="/marca/prestio-logo-negativo.svg" alt="Prestio" width="118" height="39" />
+          <p>Cardápio digital e painel de pedidos para delivery, retirada e mesa.</p>
+        </div>
+        <div>
+          <p class="rodape__titulo">Fale com a gente</p>
+          <p>
+            <a href={linkWhatsApp(MSG_DEMO)} target="_blank" rel="noopener">WhatsApp {WHATSAPP.exibicao}</a><br />
+            Atendimento de {WHATSAPP.horario}
+          </p>
+        </div>
+        <div>
+          <p class="rodape__titulo">Documentos</p>
+          <p>
+            <a href="/privacidade">Política de Privacidade</a><br />
+            <a href="/termos">Termos de Uso</a>
+          </p>
+        </div>
+      </div>
+      <div class="container rodape__base">
+        <span>© {ano} Prestio. Todos os direitos reservados.</span>
+        <span>Desenvolvido por <a href="https://splashsistemas.com.br" target="_blank" rel="noopener">Splash Sistemas</a></span>
+      </div>
+    </footer>
+  </body>
+</html>

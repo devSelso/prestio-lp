@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import { WHATSAPP, linkWhatsApp } from '../config';
+
+const atualizado = '13 de outubro de 2026';
+const contato = linkWhatsApp('Olá! Tenho uma dúvida sobre os Termos de Uso da Prestio.');
+---
+
+<Base
+  title="Termos de Uso · Prestio"
+  description="Regras de uso do cardápio digital e do painel de pedidos da Prestio, para lojas e para quem faz pedidos."
+>
+  <article class="documento">
+    <h1>Termos de Uso</h1>
+    <p class="atualizado">Última atualização: {atualizado}</p>
+
+    <p>
+      Estes termos valem para quem usa a Prestio: as lojas que contratam o sistema e as pessoas que fazem pedidos pelo
+      cardápio digital. Ao usar o sistema, você concorda com estes termos e com a nossa
+      <a href="/privacidade">Política de Privacidade</a>.
+    </p>
+
+    <h2>1. O que é a Prestio</h2>
+    <p>
+      A Prestio oferece um cardápio digital, que abre no navegador, e um painel para a loja receber e gerenciar pedidos,
+      catálogo, estoque e relatórios. A Prestio não vende os produtos do cardápio: quem vende, prepara e entrega é a loja.
+    </p>
+
+    <h2>2. Para quem faz pedidos</h2>
+    <ul>
+      <li>
+        o pedido é feito diretamente com a loja. Preço, disponibilidade, preparo, entrega, troca e atendimento são de
+        responsabilidade da loja;
+      </li>
+      <li>
+        o pagamento é combinado com a loja, na entrega, na retirada ou na mesa. A Prestio não recebe pagamentos de
+        clientes;
+      </li>
+      <li>a taxa de entrega, quando houver, é informada e cobrada pela loja;</li>
+      <li>informe dados corretos (nome, telefone, CPF e endereço) para que a loja consiga atender o pedido;</li>
+      <li>não faça pedidos falsos ou em nome de outra pessoa.</li>
+    </ul>
+
+    <h2>3. Para as lojas</h2>
+    <ul>
+      <li>
+        a loja é responsável pelas informações do cardápio (produtos, fotos, preços, estoque e promoções) e por cumprir as
+        leis de defesa do consumidor, sanitárias e fiscais;
+      </li>
+      <li>
+        a loja é a controladora dos dados dos seus clientes e deve usá-los só para atender pedidos e para o que a LGPD
+        permitir;
+      </li>
+      <li>cada usuário do painel deve ter o próprio acesso e manter a senha em sigilo;</li>
+      <li>
+        os planos, os limites de pedidos, a mensalidade e as condições de implantação são os informados no momento da
+        contratação. Se a loja passar do limite de pedidos do plano, no mês seguinte ela passa para o plano de cima;
+      </li>
+      <li>não é permitido usar o sistema para atividades ilegais ou tentar acessar dados de outras lojas.</li>
+    </ul>
+
+    <h2>4. Disponibilidade</h2>
+    <p>
+      Trabalhamos para manter o sistema no ar o tempo todo, mas podem acontecer interrupções para manutenção ou por falhas
+      de fornecedores de internet e hospedagem. Sempre que possível, avisaremos as lojas com antecedência.
+    </p>
+
+    <h2>5. Propriedade</h2>
+    <p>
+      A marca, o código e o visual da Prestio pertencem à Prestio. O conteúdo cadastrado pela loja (produtos, fotos,
+      textos e marca) continua sendo da loja, que pode exportar o próprio catálogo por planilha.
+    </p>
+
+    <h2>6. Responsabilidade</h2>
+    <p>
+      A Prestio responde pelo funcionamento do sistema, nos limites da lei. Não responde por produtos, preços, entregas ou
+      atendimento das lojas, nem por prejuízos causados por informação errada cadastrada pela loja ou pelo cliente.
+    </p>
+
+    <h2>7. Mudanças</h2>
+    <p>
+      Podemos atualizar estes termos. A data no topo mostra a versão em vigor. Mudanças importantes serão avisadas às
+      lojas pelo painel.
+    </p>
+
+    <h2>8. Contato e foro</h2>
+    <p>
+      Dúvidas: <a href={contato} target="_blank" rel="noopener">WhatsApp {WHATSAPP.exibicao}</a>. Estes termos seguem a
+      lei brasileira. Para quem faz pedidos, vale o foro do domicílio do consumidor.
+    </p>
+  </article>
+</Base>
