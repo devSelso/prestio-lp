@@ -1,0 +1,674 @@
+[
+  {
+    "file": "admin-copiar-catalogo-01-menu-copiar.png",
+    "tutorial": "admin-copiar-catalogo",
+    "passo": 1,
+    "descricao": "menu-copiar",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "admin-copiar-catalogo-02-escolher-loja-de-origem.png",
+    "tutorial": "admin-copiar-catalogo",
+    "passo": 2,
+    "descricao": "escolher-loja-de-origem",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "admin-criar-loja-01-dados-da-loja-nova.png",
+    "tutorial": "admin-criar-loja",
+    "passo": 1,
+    "descricao": "dados-da-loja-nova",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "admin-relatorios-01-periodo-e-numeros.png",
+    "tutorial": "admin-relatorios",
+    "passo": 1,
+    "descricao": "periodo-e-numeros",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "admin-relatorios-02-relatorio-completo.png",
+    "tutorial": "admin-relatorios",
+    "passo": 2,
+    "descricao": "relatorio-completo",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "admin-relatorios-03-exportar-planilha.png",
+    "tutorial": "admin-relatorios",
+    "passo": 3,
+    "descricao": "exportar-planilha",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "admin-usuarios-01-lista-de-usuarios.png",
+    "tutorial": "admin-usuarios",
+    "passo": 1,
+    "descricao": "lista-de-usuarios",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "admin-usuarios-02-cadastrar-usuario.png",
+    "tutorial": "admin-usuarios",
+    "passo": 2,
+    "descricao": "cadastrar-usuario",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "admin-varias-lojas-01-seletor-de-unidade.png",
+    "tutorial": "admin-varias-lojas",
+    "passo": 1,
+    "descricao": "seletor-de-unidade",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "admin-varias-lojas-02-escolher-a-loja.png",
+    "tutorial": "admin-varias-lojas",
+    "passo": 2,
+    "descricao": "escolher-a-loja",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "cliente-acompanhar-pedido-01-linha-do-tempo.png",
+    "tutorial": "cliente-acompanhar-pedido",
+    "passo": 1,
+    "descricao": "linha-do-tempo",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-escolher-opcoes-01-primeira-etapa.png",
+    "tutorial": "cliente-escolher-opcoes",
+    "passo": 1,
+    "descricao": "primeira-etapa",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-escolher-opcoes-02-opcao-escolhida.png",
+    "tutorial": "cliente-escolher-opcoes",
+    "passo": 2,
+    "descricao": "opcao-escolhida",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-escolher-opcoes-03-adicionais.png",
+    "tutorial": "cliente-escolher-opcoes",
+    "passo": 3,
+    "descricao": "adicionais",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-escolher-opcoes-04-quantidade-e-observacao.png",
+    "tutorial": "cliente-escolher-opcoes",
+    "passo": 4,
+    "descricao": "quantidade-e-observacao",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-escolher-opcoes-05-item-na-sacola.png",
+    "tutorial": "cliente-escolher-opcoes",
+    "passo": 5,
+    "descricao": "item-na-sacola",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-meus-pedidos-01-ver-meus-pedidos.png",
+    "tutorial": "cliente-meus-pedidos",
+    "passo": 1,
+    "descricao": "ver-meus-pedidos",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-meus-pedidos-02-digitar-cpf.png",
+    "tutorial": "cliente-meus-pedidos",
+    "passo": 2,
+    "descricao": "digitar-cpf",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-meus-pedidos-03-lista-de-hoje.png",
+    "tutorial": "cliente-meus-pedidos",
+    "passo": 3,
+    "descricao": "lista-de-hoje",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-pedir-na-mesa-01-boas-vindas-da-mesa.png",
+    "tutorial": "cliente-pedir-na-mesa",
+    "passo": 1,
+    "descricao": "boas-vindas-da-mesa",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-pedir-na-mesa-02-escolher-produto.png",
+    "tutorial": "cliente-pedir-na-mesa",
+    "passo": 2,
+    "descricao": "escolher-produto",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-pedir-na-mesa-03-ver-sacola.png",
+    "tutorial": "cliente-pedir-na-mesa",
+    "passo": 3,
+    "descricao": "ver-sacola",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-pedir-na-mesa-04-sacola.png",
+    "tutorial": "cliente-pedir-na-mesa",
+    "passo": 4,
+    "descricao": "sacola",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-pedir-na-mesa-05-seus-dados.png",
+    "tutorial": "cliente-pedir-na-mesa",
+    "passo": 5,
+    "descricao": "seus-dados",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-pedir-na-mesa-06-confirmar.png",
+    "tutorial": "cliente-pedir-na-mesa",
+    "passo": 6,
+    "descricao": "confirmar",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-pedir-na-mesa-07-pedido-enviado.png",
+    "tutorial": "cliente-pedir-na-mesa",
+    "passo": 7,
+    "descricao": "pedido-enviado",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-pedir-para-levar-ou-entregar-01-entrada-da-loja.png",
+    "tutorial": "cliente-pedir-para-levar-ou-entregar",
+    "passo": 1,
+    "descricao": "entrada-da-loja",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-pedir-para-levar-ou-entregar-02-retirar-ou-receber.png",
+    "tutorial": "cliente-pedir-para-levar-ou-entregar",
+    "passo": 2,
+    "descricao": "retirar-ou-receber",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-pedir-para-levar-ou-entregar-03-endereco-de-entrega.png",
+    "tutorial": "cliente-pedir-para-levar-ou-entregar",
+    "passo": 3,
+    "descricao": "endereco-de-entrega",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-pedir-para-levar-ou-entregar-04-confirmar-entrega.png",
+    "tutorial": "cliente-pedir-para-levar-ou-entregar",
+    "passo": 4,
+    "descricao": "confirmar-entrega",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-preco-de-clube-01-lista-com-preco-de-clube.png",
+    "tutorial": "cliente-preco-de-clube",
+    "passo": 1,
+    "descricao": "lista-com-preco-de-clube",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-promocao-combo-01-carrossel-de-promocoes.png",
+    "tutorial": "cliente-promocao-combo",
+    "passo": 1,
+    "descricao": "carrossel-de-promocoes",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-promocao-combo-02-escolhas-do-combo.png",
+    "tutorial": "cliente-promocao-combo",
+    "passo": 2,
+    "descricao": "escolhas-do-combo",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-promocao-combo-03-adicionar-combo.png",
+    "tutorial": "cliente-promocao-combo",
+    "passo": 3,
+    "descricao": "adicionar-combo",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-promocao-combo-04-combo-na-sacola.png",
+    "tutorial": "cliente-promocao-combo",
+    "passo": 4,
+    "descricao": "combo-na-sacola",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-revenda-01-cardapio-de-revenda.png",
+    "tutorial": "cliente-revenda",
+    "passo": 1,
+    "descricao": "cardapio-de-revenda",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "cliente-whatsapp-entrega-01-abrir-whatsapp.png",
+    "tutorial": "cliente-whatsapp-entrega",
+    "passo": 1,
+    "descricao": "abrir-whatsapp",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "dono-abrir-cardapio-01-botoes-abrir.png",
+    "tutorial": "dono-abrir-cardapio",
+    "passo": 1,
+    "descricao": "botoes-abrir",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-adicionais-01-grupo-de-adicionais.png",
+    "tutorial": "dono-adicionais",
+    "passo": 1,
+    "descricao": "grupo-de-adicionais",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-adicionais-02-novo-adicional.png",
+    "tutorial": "dono-adicionais",
+    "passo": 2,
+    "descricao": "novo-adicional",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-atendentes-01-lista-de-atendentes.png",
+    "tutorial": "dono-atendentes",
+    "passo": 1,
+    "descricao": "lista-de-atendentes",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-atendentes-02-novo-atendente.png",
+    "tutorial": "dono-atendentes",
+    "passo": 2,
+    "descricao": "novo-atendente",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-cadastrar-produto-01-lista-de-produtos.png",
+    "tutorial": "dono-cadastrar-produto",
+    "passo": 1,
+    "descricao": "lista-de-produtos",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-cadastrar-produto-02-dados-e-precos.png",
+    "tutorial": "dono-cadastrar-produto",
+    "passo": 2,
+    "descricao": "dados-e-precos",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-cadastrar-produto-03-categoria-e-onde-aparece.png",
+    "tutorial": "dono-cadastrar-produto",
+    "passo": 3,
+    "descricao": "categoria-e-onde-aparece",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-cadastrar-produto-04-foto-e-salvar.png",
+    "tutorial": "dono-cadastrar-produto",
+    "passo": 4,
+    "descricao": "foto-e-salvar",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-cadastrar-produto-05-produto-na-lista.png",
+    "tutorial": "dono-cadastrar-produto",
+    "passo": 5,
+    "descricao": "produto-na-lista",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-canais-de-pedido-01-ligar-e-desligar-canais.png",
+    "tutorial": "dono-canais-de-pedido",
+    "passo": 1,
+    "descricao": "ligar-e-desligar-canais",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-categorias-01-lista-de-categorias.png",
+    "tutorial": "dono-categorias",
+    "passo": 1,
+    "descricao": "lista-de-categorias",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-categorias-02-nova-categoria.png",
+    "tutorial": "dono-categorias",
+    "passo": 2,
+    "descricao": "nova-categoria",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-dados-da-loja-01-dados-da-loja.png",
+    "tutorial": "dono-dados-da-loja",
+    "passo": 1,
+    "descricao": "dados-da-loja",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-estoque-da-revenda-01-estoque-da-revenda.png",
+    "tutorial": "dono-estoque-da-revenda",
+    "passo": 1,
+    "descricao": "estoque-da-revenda",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-estoque-da-revenda-02-pedidos-da-revenda.png",
+    "tutorial": "dono-estoque-da-revenda",
+    "passo": 2,
+    "descricao": "pedidos-da-revenda",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-estoque-do-varejo-01-controlar-estoque.png",
+    "tutorial": "dono-estoque-do-varejo",
+    "passo": 1,
+    "descricao": "controlar-estoque",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-excluir-produto-01-botao-excluir.png",
+    "tutorial": "dono-excluir-produto",
+    "passo": 1,
+    "descricao": "botao-excluir",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-excluir-produto-02-confirmar-exclusao.png",
+    "tutorial": "dono-excluir-produto",
+    "passo": 2,
+    "descricao": "confirmar-exclusao",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-exportar-planilha-01-menu-mais-acoes.png",
+    "tutorial": "dono-exportar-planilha",
+    "passo": 1,
+    "descricao": "menu-mais-acoes",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-fechar-a-loja-01-fechar-loja.png",
+    "tutorial": "dono-fechar-a-loja",
+    "passo": 1,
+    "descricao": "fechar-loja",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-fechar-a-loja-02-confirmar-fechamento.png",
+    "tutorial": "dono-fechar-a-loja",
+    "passo": 2,
+    "descricao": "confirmar-fechamento",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-importar-planilha-01-botao-importar.png",
+    "tutorial": "dono-importar-planilha",
+    "passo": 1,
+    "descricao": "botao-importar",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-importar-planilha-02-conferir-antes-de-gravar.png",
+    "tutorial": "dono-importar-planilha",
+    "passo": 2,
+    "descricao": "conferir-antes-de-gravar",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-importar-planilha-03-importacao-concluida.png",
+    "tutorial": "dono-importar-planilha",
+    "passo": 3,
+    "descricao": "importacao-concluida",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-opcoes-do-produto-01-variacoes-do-produto.png",
+    "tutorial": "dono-opcoes-do-produto",
+    "passo": 1,
+    "descricao": "variacoes-do-produto",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-opcoes-do-produto-02-adicionais-do-produto.png",
+    "tutorial": "dono-opcoes-do-produto",
+    "passo": 2,
+    "descricao": "adicionais-do-produto",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-organizar-cardapio-01-arrastar-para-ordenar.png",
+    "tutorial": "dono-organizar-cardapio",
+    "passo": 1,
+    "descricao": "arrastar-para-ordenar",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-pausar-produto-01-desmarcar-produto-ativo.png",
+    "tutorial": "dono-pausar-produto",
+    "passo": 1,
+    "descricao": "desmarcar-produto-ativo",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-promocoes-e-combos-01-lista-de-promocoes.png",
+    "tutorial": "dono-promocoes-e-combos",
+    "passo": 1,
+    "descricao": "lista-de-promocoes",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-promocoes-e-combos-02-dados-da-promocao.png",
+    "tutorial": "dono-promocoes-e-combos",
+    "passo": 2,
+    "descricao": "dados-da-promocao",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-promocoes-e-combos-03-itens-e-desconto.png",
+    "tutorial": "dono-promocoes-e-combos",
+    "passo": 3,
+    "descricao": "itens-e-desconto",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-qr-codes-das-mesas-01-gerar-qr-codes.png",
+    "tutorial": "dono-qr-codes-das-mesas",
+    "passo": 1,
+    "descricao": "gerar-qr-codes",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-variacoes-01-grupo-de-variacoes.png",
+    "tutorial": "dono-variacoes",
+    "passo": 1,
+    "descricao": "grupo-de-variacoes",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "dono-variacoes-02-novo-grupo-e-efeito-no-preco.png",
+    "tutorial": "dono-variacoes",
+    "passo": 2,
+    "descricao": "novo-grupo-e-efeito-no-preco",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-aceitar-pedido-01-botao-aceitar.png",
+    "tutorial": "equipe-aceitar-pedido",
+    "passo": 1,
+    "descricao": "botao-aceitar",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-aceitar-pedido-02-escolher-quem-prepara.png",
+    "tutorial": "equipe-aceitar-pedido",
+    "passo": 2,
+    "descricao": "escolher-quem-prepara",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-aceitar-pedido-03-pedido-em-preparo.png",
+    "tutorial": "equipe-aceitar-pedido",
+    "passo": 3,
+    "descricao": "pedido-em-preparo",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-avancar-etapa-01-botao-da-proxima-etapa.png",
+    "tutorial": "equipe-avancar-etapa",
+    "passo": 1,
+    "descricao": "botao-da-proxima-etapa",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-aviso-de-pedido-novo-01-som-e-notificacao.png",
+    "tutorial": "equipe-aviso-de-pedido-novo",
+    "passo": 1,
+    "descricao": "som-e-notificacao",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-cancelar-pedido-01-botao-cancelar.png",
+    "tutorial": "equipe-cancelar-pedido",
+    "passo": 1,
+    "descricao": "botao-cancelar",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-cancelar-pedido-02-escolher-motivo.png",
+    "tutorial": "equipe-cancelar-pedido",
+    "passo": 2,
+    "descricao": "escolher-motivo",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-conta-da-mesa-01-pedidos-da-mesa-juntos.png",
+    "tutorial": "equipe-conta-da-mesa",
+    "passo": 1,
+    "descricao": "pedidos-da-mesa-juntos",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-conta-da-mesa-02-pergunta-da-mesa-inteira.png",
+    "tutorial": "equipe-conta-da-mesa",
+    "passo": 2,
+    "descricao": "pergunta-da-mesa-inteira",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-conta-da-mesa-03-fechar-a-mesa.png",
+    "tutorial": "equipe-conta-da-mesa",
+    "passo": 3,
+    "descricao": "fechar-a-mesa",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-detalhes-do-pedido-01-botao-detalhes.png",
+    "tutorial": "equipe-detalhes-do-pedido",
+    "passo": 1,
+    "descricao": "botao-detalhes",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-detalhes-do-pedido-02-gaveta-de-detalhes.png",
+    "tutorial": "equipe-detalhes-do-pedido",
+    "passo": 2,
+    "descricao": "gaveta-de-detalhes",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-editar-itens-01-botao-editar.png",
+    "tutorial": "equipe-editar-itens",
+    "passo": 1,
+    "descricao": "botao-editar",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-editar-itens-02-janela-editar-itens.png",
+    "tutorial": "equipe-editar-itens",
+    "passo": 2,
+    "descricao": "janela-editar-itens",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-entrar-no-painel-01-tela-de-entrar.png",
+    "tutorial": "equipe-entrar-no-painel",
+    "passo": 1,
+    "descricao": "tela-de-entrar",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-finalizar-pedido-01-botao-finalizar.png",
+    "tutorial": "equipe-finalizar-pedido",
+    "passo": 1,
+    "descricao": "botao-finalizar",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-finalizar-pedido-02-pergunta-preco-de-clube.png",
+    "tutorial": "equipe-finalizar-pedido",
+    "passo": 2,
+    "descricao": "pergunta-preco-de-clube",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-historico-01-lista-de-pedidos.png",
+    "tutorial": "equipe-historico",
+    "passo": 1,
+    "descricao": "lista-de-pedidos",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-quadro-de-pedidos-01-visao-geral.png",
+    "tutorial": "equipe-quadro-de-pedidos",
+    "passo": 1,
+    "descricao": "visao-geral",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-quadro-de-pedidos-02-coluna-novos.png",
+    "tutorial": "equipe-quadro-de-pedidos",
+    "passo": 2,
+    "descricao": "coluna-novos",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-quadro-no-celular-01-quadro-no-celular.png",
+    "tutorial": "equipe-quadro-no-celular",
+    "passo": 1,
+    "descricao": "quadro-no-celular",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "equipe-quadro-no-celular-02-menu-aberto.png",
+    "tutorial": "equipe-quadro-no-celular",
+    "passo": 2,
+    "descricao": "menu-aberto",
+    "tela": "celular 390x844"
+  },
+  {
+    "file": "equipe-voltar-etapa-01-botao-voltar-etapa.png",
+    "tutorial": "equipe-voltar-etapa",
+    "passo": 1,
+    "descricao": "botao-voltar-etapa",
+    "tela": "computador 1440x900"
+  },
+  {
+    "file": "equipe-voltar-etapa-02-pedido-voltou.png",
+    "tutorial": "equipe-voltar-etapa",
+    "passo": 2,
+    "descricao": "pedido-voltou",
+    "tela": "computador 1440x900"
+  }
+]

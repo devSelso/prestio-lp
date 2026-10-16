@@ -317,3 +317,7 @@ p {
     animation: none !important;
   }
 }
+
+[hidden] {
+  display: none !important;
+}

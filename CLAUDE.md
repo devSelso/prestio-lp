@@ -30,7 +30,17 @@ Desenvolvido pela Splash Sistemas (splashsistemas.com.br). Responsável: Bernard
 | `src/components/Relatorio.astro` | Tela de relatórios |
 | `public/marca/` | Logos: `prestio-logo.svg` (fundo claro), `prestio-logo-negativo.svg` (fundo escuro) |
 
-As telas são desenhos com dados fictícios (a hamburgueria "Brasa Burger"). Podem ser trocadas por prints reais do sistema quando houver.
+## Central de ajuda (/ajuda)
+
+- O conteúdo vem de `ajuda-insumos/tutoriais.md`, lido em `src/lib/ajuda.ts` na hora do build. **Para mudar um tutorial, edite o `.md`**, não as páginas.
+- Formato de cada tutorial: `### [id] Título`, depois **Público**, **Onde fica**, **Precisa de**, **Passos** (lista numerada, com `(print: arquivo.png)` no fim do passo), **Resultado** e **Atenção**. As seções `##` definem o grupo (cliente, equipe, dono, administrador geral), e também há "Perguntas rápidas" e "Glossário".
+- O build quebra de propósito se faltar um print citado ou se um tutorial vier sem passos ou sem resultado.
+- Os prints ficam em `ajuda-insumos/prints/` (PNG em 2x) e são convertidos para WebP pelo `astro:assets` (`src/components/Print.astro`). Prints de celular aparecem com 320 px; os de computador ocupam a coluna. Clicar abre a versão grande.
+- Páginas: `src/pages/ajuda/index.astro` (busca, grupos, perguntas rápidas com JSON-LD FAQPage, glossário) e `src/pages/ajuda/[id].astro` (um tutorial por página).
+- `ajuda-insumos/funcoes.md` e `ajuda-insumos/LEIAME.md` são de uso interno e não vão para o site.
+- Os prints são gerados por um script Playwright no repositório do painel. Veja `ajuda-insumos/LEIAME.md`.
+
+As telas da landing são desenhos com dados fictícios (a hamburgueria "Brasa Burger"). Podem ser trocadas por prints reais do sistema quando houver.
 
 ## Ordem das seções da página
 
@@ -90,6 +100,13 @@ Na landing, só listar o que já existe.
 - preço sempre calculado no servidor.
 
 ## Pendências
+
+**Decisões em aberto da central de ajuda (16/10/2026).** Pergunte ao Bernardo no início da próxima conversa, até ele decidir:
+1. **"Lover"**: o preço de clube aparece como "Lover" (nome do clube da Cacau Show) em quase todos os prints e no glossário de `ajuda-insumos/tutoriais.md` ("Preço de clube (Lover)"). Tirar do glossário? Refazer os prints com outro rótulo na loja de teste?
+2. **Relatórios**: o tutorial `admin-relatorios` diz que o dono da loja não vê Relatórios, mas a landing vende relatórios ao dono ("Seus números, sem planilha" e "Relatórios completos" no plano Profissional). Mudar o painel ou mudar a landing?
+3. **Loja fechada**: o cliente vê "Loja não encontrada" quando a loja está fechada. Melhorar a mensagem no cardápio (ex.: "Loja fechada no momento")? É mudança no repositório do cardápio.
+
+**Outras pendências:**
 
 - Publicar na Vercel e apontar `prestio.com.br` e `www`.
 - Imagem de compartilhamento (`public/og-prestio.png`) hoje é só a logo. Fazer uma de 1200×630.

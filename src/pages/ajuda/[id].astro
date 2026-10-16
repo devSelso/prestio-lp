@@ -1,0 +1,315 @@
+---
+import Base from '../../layouts/Base.astro';
+import Print from '../../components/Print.astro';
+import { TUTORIAIS, grupo, vizinhos, primeiraFrase, inline, type Tutorial } from '../../lib/ajuda';
+import { linkWhatsApp } from '../../config';
+
+export function getStaticPaths() {
+  return TUTORIAIS.map((t) => ({ params: { id: t.id }, props: { t } }));
+}
+
+const { t } = Astro.props as { t: Tutorial };
+const g = grupo(t.grupo);
+const { anterior, proximo } = vizinhos(t);
+
+const frase = primeiraFrase(t.resultado.texto);
+const descricao = frase.charAt(0).toUpperCase() + frase.slice(1);
+const duvida = linkWhatsApp(`Olá! Tenho uma dúvida sobre: ${t.titulo}`);
+---
+
+<Base title={`${t.titulo} · Ajuda Prestio`} description={descricao}>
+  <article class="tut">
+    <nav class="trilha" aria-label="Você está em">
+      <a href="/ajuda">Central de ajuda</a>
+      <span aria-hidden="true">›</span>
+      <a href={`/ajuda#${g.id}`}>{g.titulo}</a>
+    </nav>
+
+    <h1>{t.titulo}</h1>
+
+    <dl class="ficha">
+      <div><dt>Para quem</dt><dd set:html={inline(t.publico)} /></div>
+      <div><dt>Onde fica</dt><dd set:html={inline(t.ondeFica)} /></div>
+      <div><dt>Precisa de</dt><dd set:html={inline(t.precisaDe)} /></div>
+    </dl>
+
+    <h2 class="sr-only">Passo a passo</h2>
+    <ol class="passos">
+      {
+        t.passos.map((p, i) => (
+          <li>
+            <span class="passos__n" aria-hidden="true">{i + 1}</span>
+            <div class="passos__corpo">
+              <div class="passos__texto" set:html={p.html} />
+              {p.print && <Print nome={p.print} alt={`Passo ${i + 1}: ${p.texto}`} />}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <section class="caixa caixa--resultado" aria-labelledby="resultado">
+      <h2 id="resultado">Resultado</h2>
+      <div set:html={t.resultado.html} />
+      {t.resultado.print && <Print nome={t.resultado.print} alt={`Resultado: ${t.resultado.texto}`} />}
+    </section>
+
+    {
+      t.atencao.length > 0 && (
+        <section class="caixa caixa--atencao" aria-labelledby="atencao">
+          <h2 id="atencao">Atenção</h2>
+          {t.atencao.length === 1 ? (
+            <div set:html={inline(t.atencao[0])} />
+          ) : (
+            <ul>
+              {t.atencao.map((a) => (
+                <li set:html={inline(a)} />
+              ))}
+            </ul>
+          )}
+        </section>
+      )
+    }
+
+    <p class="ainda">
+      Ainda com dúvida? <a href={duvida} target="_blank" rel="noopener">Chame a gente no WhatsApp</a>.
+    </p>
+
+    <nav class="vizinhos" aria-label={`Outros tutoriais: ${g.titulo}`}>
+      {
+        anterior ? (
+          <a class="vizinho" href={`/ajuda/${anterior.id}`}>
+            <span>← Anterior</span>
+            {anterior.titulo}
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        proximo && (
+          <a class="vizinho vizinho--proximo" href={`/ajuda/${proximo.id}`}>
+            <span>Próximo →</span>
+            {proximo.titulo}
+          </a>
+        )
+      }
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .tut {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px 96px;
+  }
+  .trilha {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--texto-2);
+    margin-bottom: 18px;
+  }
+  .trilha a {
+    color: var(--ferrugem);
+    text-decoration: none;
+  }
+  .trilha a:hover {
+    text-decoration: underline;
+  }
+  h1 {
+    font-size: clamp(1.9rem, 5vw, 2.8rem);
+  }
+
+  .ficha {
+    margin: 28px 0 40px;
+    display: grid;
+    gap: 0;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio);
+    background: var(--branco);
+  }
+  .ficha div {
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 12px;
+    padding: 14px 18px;
+  }
+  .ficha div + div {
+    border-top: 1px solid var(--linha);
+  }
+  .ficha dt {
+    font-weight: 700;
+    font-size: 0.92rem;
+  }
+  .ficha dd {
+    margin: 0;
+    color: var(--texto-2);
+  }
+  .ficha :global(p) {
+    margin: 0;
+  }
+
+  .passos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 36px;
+  }
+  .passos li {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 16px;
+  }
+  .passos__n {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--ferrugem);
+    color: var(--creme);
+    font: 800 1.1rem var(--titulo);
+    display: grid;
+    place-items: center;
+  }
+  .passos__texto {
+    font-size: 1.08rem;
+    padding-top: 6px;
+  }
+
+  :global(.tut pre) {
+    background: var(--chocolate);
+    color: var(--creme);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 12px 0;
+    overflow-x: auto;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+  :global(.tut code) {
+    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+    font-size: 0.9em;
+  }
+  :global(.tut p code) {
+    background: var(--creme-2);
+    border-radius: 5px;
+    padding: 1px 6px;
+    overflow-wrap: anywhere;
+  }
+  :global(.tut p + p) {
+    margin-top: 10px;
+  }
+
+  .caixa {
+    margin-top: 44px;
+    border-radius: var(--raio);
+    padding: 22px 24px;
+  }
+  .caixa h2 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+  .caixa--resultado {
+    background: #edf5ea;
+    border: 1px solid #b9d6ad;
+  }
+  .caixa--resultado h2 {
+    color: #2f6a32;
+  }
+  .caixa--atencao {
+    margin-top: 20px;
+    background: #fdf1e2;
+    border: 1px solid #ecc79a;
+  }
+  .caixa--atencao h2 {
+    color: var(--ferrugem-escuro);
+  }
+  .caixa ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+  .caixa li + li {
+    margin-top: 6px;
+  }
+  .caixa :global(p) {
+    margin: 0;
+  }
+
+  .ainda {
+    margin-top: 36px;
+    color: var(--texto-2);
+  }
+  .ainda a {
+    color: var(--ferrugem);
+    font-weight: 600;
+  }
+
+  .vizinhos {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--linha);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .vizinho {
+    display: block;
+    text-decoration: none;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio);
+    padding: 16px 18px;
+    background: var(--branco);
+    font-family: var(--titulo);
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  .vizinho:hover {
+    border-color: var(--ferrugem);
+  }
+  .vizinho span {
+    display: block;
+    font: 600 0.85rem var(--corpo);
+    color: var(--ferrugem);
+    margin-bottom: 6px;
+  }
+  .vizinho--proximo {
+    text-align: right;
+  }
+
+  @media (max-width: 600px) {
+    .ficha div {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .passos li {
+      grid-template-columns: 32px minmax(0, 1fr);
+      gap: 12px;
+    }
+    .passos__n {
+      width: 32px;
+      height: 32px;
+      font-size: 0.95rem;
+    }
+    .passos__texto {
+      padding-top: 3px;
+    }
+    .vizinhos {
+      grid-template-columns: 1fr;
+    }
+    .vizinho--proximo {
+      text-align: left;
+    }
+  }
+</style>

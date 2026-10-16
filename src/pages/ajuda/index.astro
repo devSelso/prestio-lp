@@ -1,0 +1,346 @@
+---
+import Base from '../../layouts/Base.astro';
+import { TUTORIAIS, PERGUNTAS, GLOSSARIO, GRUPOS, inline, textoPuro } from '../../lib/ajuda';
+import { linkWhatsApp } from '../../config';
+
+// Texto usado pela busca: sem acento e em minúsculas.
+const normalizar = (s: string) =>
+  s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+const grupos = GRUPOS.map((g) => ({ ...g, tutoriais: TUTORIAIS.filter((t) => t.grupo === g.id) }));
+
+const busca = (t: (typeof TUTORIAIS)[number]) =>
+  normalizar([t.titulo, t.ondeFica, ...t.passos.map((p) => p.texto), t.resultado.texto].map(textoPuro).join(' '));
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: PERGUNTAS.map((p) => ({
+    '@type': 'Question',
+    name: p.pergunta,
+    acceptedAnswer: { '@type': 'Answer', text: textoPuro(p.resposta) },
+  })),
+};
+
+const duvida = linkWhatsApp('Olá! Não achei minha dúvida na central de ajuda da Prestio.');
+---
+
+<Base
+  title="Central de ajuda · Prestio"
+  description="Tutoriais passo a passo da Prestio: como pedir pelo cardápio, atender pelo quadro de pedidos, cadastrar produtos, controlar estoque e mais."
+  jsonLd={jsonLd}
+>
+  <section class="ajuda-topo">
+    <div class="container estreito">
+      <span class="selo">Central de ajuda</span>
+      <h1>Como podemos ajudar?</h1>
+      <p class="ajuda-topo__sub">Passo a passo, com as telas, de tudo o que dá para fazer na Prestio.</p>
+      <div class="busca">
+        <label for="busca" class="sr-only">Buscar na ajuda</label>
+        <input
+          id="busca"
+          type="search"
+          placeholder="Ex.: cancelar pedido, estoque, QR Code"
+          autocomplete="off"
+          enterkeyhint="search"
+        />
+      </div>
+      <nav class="atalhos" aria-label="Grupos de tutoriais">
+        {grupos.map((g) => <a href={`#${g.id}`}>{g.titulo}</a>)}
+        <a href="#perguntas">Perguntas rápidas</a>
+        <a href="#glossario">Glossário</a>
+      </nav>
+    </div>
+  </section>
+
+  <div class="container estreito conteudo">
+    <p class="vazio" id="vazio" hidden>
+      Nada encontrado. <a href={duvida} target="_blank" rel="noopener">Pergunte pelo WhatsApp</a>.
+    </p>
+
+    {
+      grupos.map((g) => (
+        <section class="grupo" id={g.id} data-grupo>
+          <h2>{g.titulo}</h2>
+          <p class="grupo__desc">{g.descricao}</p>
+          <ul class="lista">
+            {g.tutoriais.map((t) => (
+              <li data-busca={busca(t)}>
+                <a href={`/ajuda/${t.id}`}>
+                  <span class="lista__titulo">{t.titulo}</span>
+                  <span class="lista__onde" set:html={inline(t.ondeFica)} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+
+    <section class="grupo" id="perguntas" data-grupo>
+      <h2>Perguntas rápidas</h2>
+      <div class="perguntas">
+        {
+          PERGUNTAS.map((p) => (
+            <details data-busca={normalizar(`${p.pergunta} ${p.resposta}`)}>
+              <summary>{p.pergunta}</summary>
+              <div set:html={inline(p.resposta)} />
+            </details>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="grupo" id="glossario" data-grupo>
+      <h2>Glossário</h2>
+      <dl class="glossario">
+        {
+          GLOSSARIO.map((t) => (
+            <div data-busca={normalizar(`${t.termo} ${t.definicao}`)}>
+              <dt>{t.termo}</dt>
+              <dd set:html={inline(t.definicao)} />
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <p class="ainda">
+      Não achou o que procurava? <a href={duvida} target="_blank" rel="noopener">Chame a gente no WhatsApp</a>.
+    </p>
+  </div>
+</Base>
+
+<script>
+  const campo = document.getElementById('busca') as HTMLInputElement;
+  const vazio = document.getElementById('vazio')!;
+  const grupos = [...document.querySelectorAll<HTMLElement>('[data-grupo]')];
+  const normalizar = (s: string) =>
+    s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+
+  function filtrar() {
+    const palavras = normalizar(campo.value).split(/\s+/).filter(Boolean);
+    let total = 0;
+    for (const g of grupos) {
+      let noGrupo = 0;
+      for (const item of g.querySelectorAll<HTMLElement>('[data-busca]')) {
+        const ok = palavras.every((p) => item.dataset.busca!.includes(p));
+        item.hidden = !ok;
+        if (ok) noGrupo++;
+      }
+      g.hidden = noGrupo === 0;
+      total += noGrupo;
+    }
+    vazio.hidden = total > 0;
+  }
+
+  campo.addEventListener('input', filtrar);
+</script>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .estreito {
+    max-width: 880px;
+  }
+  .ajuda-topo {
+    padding: clamp(40px, 7vw, 72px) 0 36px;
+    border-bottom: 1px solid var(--linha);
+  }
+  .ajuda-topo__sub {
+    margin: 14px 0 26px;
+    font-size: 1.1rem;
+    color: var(--texto-2);
+  }
+  .busca input {
+    width: 100%;
+    height: 56px;
+    padding: 0 18px;
+    font: inherit;
+    font-size: 17px;
+    border-radius: 14px;
+    border: 1.5px solid var(--linha);
+    background: var(--branco);
+    color: var(--chocolate);
+  }
+  .busca input:focus {
+    outline: none;
+    border-color: var(--ferrugem);
+    box-shadow: 0 0 0 4px rgba(181, 84, 31, 0.15);
+  }
+  .atalhos {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .atalhos a {
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--creme-2);
+  }
+  .atalhos a:hover {
+    background: var(--chocolate);
+    color: var(--creme);
+  }
+
+  .conteudo {
+    padding-bottom: 96px;
+  }
+  .vazio {
+    margin-top: 40px;
+    font-size: 1.1rem;
+    color: var(--texto-2);
+  }
+  .vazio a,
+  .ainda a {
+    color: var(--ferrugem);
+    font-weight: 600;
+  }
+  .grupo {
+    padding-top: 48px;
+  }
+  .grupo h2 {
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+  }
+  .grupo__desc {
+    color: var(--texto-2);
+    margin: 6px 0 18px;
+  }
+
+  .lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio);
+    background: var(--branco);
+    overflow: hidden;
+  }
+  .lista li + li {
+    border-top: 1px solid var(--linha);
+  }
+  .lista a {
+    display: block;
+    padding: 16px 44px 16px 20px;
+    text-decoration: none;
+    position: relative;
+  }
+  .lista a::after {
+    content: '→';
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ferrugem);
+    font-weight: 700;
+  }
+  .lista a:hover {
+    background: var(--creme);
+  }
+  .lista__titulo {
+    display: block;
+    font-family: var(--titulo);
+    font-weight: 700;
+    font-size: 1.08rem;
+    letter-spacing: -0.01em;
+  }
+  .lista__onde {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.9rem;
+    color: var(--texto-2);
+  }
+  .lista__onde :global(p) {
+    margin: 0;
+  }
+
+  .perguntas {
+    margin-top: 14px;
+  }
+  .perguntas details {
+    border-bottom: 1px solid var(--linha);
+  }
+  .perguntas summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 18px 36px 18px 0;
+    position: relative;
+    font-family: var(--titulo);
+    font-weight: 700;
+    font-size: 1.08rem;
+  }
+  .perguntas summary::-webkit-details-marker {
+    display: none;
+  }
+  .perguntas summary::after {
+    content: '+';
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--ferrugem);
+    transition: transform 0.2s;
+  }
+  .perguntas details[open] summary::after {
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .perguntas details > div {
+    padding: 0 0 18px;
+    color: var(--texto-2);
+  }
+
+  .glossario {
+    margin: 14px 0 0;
+    display: grid;
+    gap: 0;
+  }
+  .glossario div {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--linha);
+  }
+  .glossario dt {
+    font-weight: 700;
+  }
+  .glossario dd {
+    margin: 0;
+    color: var(--texto-2);
+  }
+  :global(.glossario code),
+  :global(.lista__onde code) {
+    background: var(--creme-2);
+    border-radius: 5px;
+    padding: 1px 6px;
+    font-size: 0.9em;
+    overflow-wrap: anywhere;
+  }
+
+  .ainda {
+    margin-top: 48px;
+    color: var(--texto-2);
+  }
+
+  @media (max-width: 600px) {
+    .glossario div {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .lista a {
+      padding: 14px 40px 14px 16px;
+    }
+  }
+</style>

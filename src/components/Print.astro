@@ -1,0 +1,60 @@
+---
+// Print de uma tela do sistema, otimizado. Clicar abre a versão grande numa aba nova.
+import { Image, getImage } from 'astro:assets';
+import { imagem, ehCelular } from '../lib/ajuda';
+
+interface Props {
+  nome: string;
+  alt: string;
+}
+
+const { nome, alt } = Astro.props;
+const src = imagem(nome);
+const celular = ehCelular(src);
+const grande = await getImage({ src, width: celular ? src.width : 1920, format: 'webp', quality: 85 });
+---
+
+<figure class:list={['print', celular ? 'print--celular' : 'print--computador']}>
+  <a href={grande.src} target="_blank" rel="noopener" aria-label={`Abrir imagem em tamanho cheio: ${alt}`}>
+    {
+      celular ? (
+        <Image src={src} alt={alt} width={320} densities={[1, 2]} format="webp" quality={80} loading="lazy" />
+      ) : (
+        <Image
+          src={src}
+          alt={alt}
+          widths={[760, 1520]}
+          sizes="(max-width: 800px) calc(100vw - 40px), 760px"
+          format="webp"
+          quality={80}
+          loading="lazy"
+        />
+      )
+    }
+  </a>
+</figure>
+
+<style>
+  .print {
+    margin: 16px 0 0;
+  }
+  .print a {
+    display: block;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--linha);
+    background: var(--branco);
+    transition: box-shadow 0.15s;
+  }
+  .print a:hover {
+    box-shadow: 0 12px 32px -16px rgba(34, 21, 15, 0.45);
+  }
+  .print img {
+    width: 100%;
+    height: auto;
+  }
+  .print--celular a {
+    max-width: 320px;
+    border-radius: 22px;
+  }
+</style>
